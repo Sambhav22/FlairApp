@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
-import Login from "./components/ForgotPassword";
+import Login from "./components/ResetPassword";
 export default class App extends React.Component {
   constructor() {
     super();
