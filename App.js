@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
-import Login from "./components/Login";
+import Login from "./components/ForgotPassword";
 export default class App extends React.Component {
   constructor() {
     super();
@@ -15,7 +15,8 @@ export default class App extends React.Component {
       light: require("./assets/fonts/SourceSansPro-Light.ttf"),
       Semibold: require("./assets/fonts/SourceSansPro-Semibold.ttf"),
       black: require("./assets/fonts/SourceSansPro-Black.ttf"),
-      Italic: require("./assets/fonts/SourceSansPro-Italic.ttf")
+      Italic: require("./assets/fonts/SourceSansPro-Italic.ttf"),
+      regular: require("./assets/fonts/SourceSansPro-Regular.ttf")
     });
     this.setState({ fontLoaded: true });
   }
