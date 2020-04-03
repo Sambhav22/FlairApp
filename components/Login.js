@@ -8,25 +8,8 @@ import {
   Keyboard,
   TouchableOpacity
 } from "react-native";
-import * as Font from "expo-font";
 
 export default class Login extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      fontLoaded: false
-    };
-  }
-
-  async componentDidMount() {
-    await Font.loadAsync({
-      light: require("../assets/fonts/SourceSansPro-Light.ttf"),
-      Semibold: require("../assets/fonts/SourceSansPro-Semibold.ttf"),
-      black: require("../assets/fonts/SourceSansPro-Black.ttf"),
-      Italic: require("../assets/fonts/SourceSansPro-Italic.ttf")
-    });
-    this.setState({ fontLoaded: true });
-  }
   render() {
     return (
       <View style={styles.container}>
@@ -51,12 +34,14 @@ export default class Login extends React.Component {
                 style={styles.input}
                 placeholder="Password"
                 placeholderTextColor="grey"
-                returnKeyType="Go"
+                returnKeyType="go"
                 secureTextEntry={true}
                 autoCorrect={false}
                 ref={"txtPassword"}
               />
-              <Text style={styles.forgotText}>Forgot Password?</Text>
+              <TouchableOpacity>
+                <Text style={styles.forgotText}>Forgot Password?</Text>
+              </TouchableOpacity>
 
               <TouchableOpacity style={styles.buttonContainer}>
                 <Text style={styles.buttonText}> Login</Text>
