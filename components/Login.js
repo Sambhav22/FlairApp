@@ -8,7 +8,7 @@ import {
   Keyboard,
   TouchableOpacity
 } from "react-native";
-
+import { LinearGradient } from "expo-linear-gradient";
 export default class Login extends React.Component {
   render() {
     return (
@@ -23,7 +23,7 @@ export default class Login extends React.Component {
               <TextInput
                 style={styles.input}
                 placeholder="Email/Mobile"
-                placeholderTextColor="grey"
+                placeholderTextColor="#555555"
                 keyboardType="email-address"
                 returnKeyType="next"
                 autoCorrect={false}
@@ -33,7 +33,7 @@ export default class Login extends React.Component {
               <TextInput
                 style={styles.input}
                 placeholder="Password"
-                placeholderTextColor="grey"
+                placeholderTextColor="#555555"
                 returnKeyType="go"
                 secureTextEntry={true}
                 autoCorrect={false}
@@ -43,8 +43,13 @@ export default class Login extends React.Component {
                 <Text style={styles.forgotText}>Forgot Password?</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.buttonContainer}>
-                <Text style={styles.buttonText}> Login</Text>
+              <TouchableOpacity>
+                <LinearGradient
+                  colors={["#FDB900", "#B16D00"]}
+                  style={styles.buttonContainer}
+                >
+                  <Text style={styles.buttonText}> Login</Text>
+                </LinearGradient>
               </TouchableOpacity>
             </View>
           </View>
@@ -56,20 +61,20 @@ export default class Login extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black"
+    backgroundColor: "#0B0D0C"
   },
   loginContainer: {
     marginTop: 20
   },
   loginText: {
-    color: "white",
+    color: "#FFFFFF",
     fontSize: 64,
-    padding: 20,
+    padding: 15,
     fontFamily: "light"
   },
   emailText: {
     paddingLeft: 20,
-    color: "white",
+    color: "#FFFFFF",
     fontSize: 15,
     fontFamily: "Semibold"
   },
@@ -79,29 +84,28 @@ const styles = StyleSheet.create({
     marginRight: 20,
     height: 50,
     paddingBottom: 10,
-    backgroundColor: "black",
-    borderBottomColor: "white",
+    backgroundColor: "#0B0D0C",
+    borderBottomColor: "#FFFFFF",
     borderBottomWidth: 1,
     fontSize: 30,
-    color: "white",
+    color: "#FFFFFF",
     fontFamily: "black"
   },
   passwordText: {
-    marginTop: 20,
+    marginTop: 15,
     paddingLeft: 20,
-    color: "white",
+    color: "#FFFFFF",
     fontSize: 15,
     fontFamily: "Semibold"
   },
   forgotText: {
-    color: "grey",
+    color: "#555555",
     textAlign: "center",
     marginTop: 40,
     fontSize: 12,
     fontFamily: "Italic"
   },
   buttonContainer: {
-    backgroundColor: "#FDB900",
     paddingVertical: 6,
     marginTop: 40,
     marginLeft: 20,
@@ -110,7 +114,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
-    color: "white",
+    color: "#FFFFFF",
     fontSize: 18,
     fontFamily: "Semibold"
   }
