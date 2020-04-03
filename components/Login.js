@@ -6,9 +6,13 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
-  TouchableOpacity
+  TouchableOpacity,
+  Button,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+
+import Forgot from "./ForgotPassword";
+
 export default class Login extends React.Component {
   render() {
     return (
@@ -39,7 +43,12 @@ export default class Login extends React.Component {
                 autoCorrect={false}
                 ref={"txtPassword"}
               />
-              <TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate("Forgot");
+                }}
+              >
                 <Text style={styles.forgotText}>Forgot Password?</Text>
               </TouchableOpacity>
 
@@ -61,22 +70,22 @@ export default class Login extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0B0D0C"
+    backgroundColor: "#0B0D0C",
   },
   loginContainer: {
-    marginTop: 20
+    marginTop: 20,
   },
   loginText: {
     color: "#FFFFFF",
     fontSize: 64,
     padding: 15,
-    fontFamily: "light"
+    fontFamily: "light",
   },
   emailText: {
     paddingLeft: 20,
     color: "#FFFFFF",
     fontSize: 15,
-    fontFamily: "Semibold"
+    fontFamily: "Semibold",
   },
   input: {
     marginTop: 15,
@@ -89,33 +98,33 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     fontSize: 30,
     color: "#FFFFFF",
-    fontFamily: "black"
+    fontFamily: "black",
   },
   passwordText: {
     marginTop: 15,
     paddingLeft: 20,
     color: "#FFFFFF",
     fontSize: 15,
-    fontFamily: "Semibold"
+    fontFamily: "Semibold",
   },
   forgotText: {
     color: "#555555",
     textAlign: "center",
     marginTop: 40,
     fontSize: 12,
-    fontFamily: "Italic"
+    fontFamily: "Italic",
   },
   buttonContainer: {
     paddingVertical: 6,
     marginTop: 40,
     marginLeft: 20,
     marginRight: 20,
-    borderRadius: 7
+    borderRadius: 7,
   },
   buttonText: {
     textAlign: "center",
     color: "#FFFFFF",
     fontSize: 18,
-    fontFamily: "Semibold"
-  }
+    fontFamily: "Semibold",
+  },
 });

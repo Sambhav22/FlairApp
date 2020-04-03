@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 export default class ForgotPassword extends React.Component {
@@ -22,7 +22,11 @@ export default class ForgotPassword extends React.Component {
             returnKeyType="go"
             autoCorrect={false}
           />
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("Reset");
+            }}
+          >
             <Text style={styles.forgotText}>Proceed</Text>
           </TouchableOpacity>
         </View>
@@ -33,21 +37,21 @@ export default class ForgotPassword extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0B0D0C"
+    backgroundColor: "#0B0D0C",
   },
   rpText: {
     color: "#FDB900",
     fontSize: 18,
     textAlign: "center",
     marginTop: 55,
-    fontFamily: "Semibold"
+    fontFamily: "Semibold",
   },
   emailText: {
     marginTop: 37,
     color: "#ffff",
     fontSize: 15,
     fontFamily: "regular",
-    marginLeft: 10
+    marginLeft: 10,
   },
   input: {
     marginTop: 10,
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 20,
     color: "#FFFFFF",
-    fontFamily: "black"
+    fontFamily: "black",
   },
   forgotText: {
     color: "#FFFF",
@@ -73,6 +77,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 138,
     paddingVertical: 10,
     paddingHorizontal: 22,
-    borderRadius: 10
-  }
+    borderRadius: 10,
+  },
 });

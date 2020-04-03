@@ -1,12 +1,15 @@
 import React from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
-import Login from "./components/ResetPassword";
-export default class App extends React.Component {
+import Routes from "./components/Routes";
+import { NavigationContainer, createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+
+class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      fontLoaded: false
+      fontLoaded: false,
     };
   }
 
@@ -16,7 +19,7 @@ export default class App extends React.Component {
       Semibold: require("./assets/fonts/SourceSansPro-Semibold.ttf"),
       black: require("./assets/fonts/SourceSansPro-Black.ttf"),
       Italic: require("./assets/fonts/SourceSansPro-Italic.ttf"),
-      regular: require("./assets/fonts/SourceSansPro-Regular.ttf")
+      regular: require("./assets/fonts/SourceSansPro-Regular.ttf"),
     });
     this.setState({ fontLoaded: true });
   }
@@ -24,7 +27,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         {this.state.fontLoaded ? (
-          <Login />
+          <Routes />
         ) : (
           <ActivityIndicator size="large" style={{ flex: 1 }} />
         )}
@@ -35,6 +38,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black"
-  }
+    backgroundColor: "black",
+  },
 });
+export default App;
