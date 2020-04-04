@@ -10,6 +10,41 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 export default class ForgotPassword extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+    };
+  }
+  myfun = () => {
+    const emailReg = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    const { email } = this.state;
+    if (email == "") {
+      this.setState({
+        ErrorEmail: "Please Enter your Email Address",
+      });
+
+      Keyboard.dismiss();
+      setTimeout(() => {
+        this.setState({
+          ErrorEmail: "",
+        });
+      }, 3000);
+    } else if (!email.match(emailReg)) {
+      this.setState({
+        ErrorEmail: "Please Enter Valid Email Address.",
+      });
+      Keyboard.dismiss();
+      setTimeout(() => {
+        this.setState({
+          ErrorEmail: "",
+        });
+      }, 3000);
+    } else {
+      this.props.navigation.navigate("Reset");
+    }
+  };
+
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -20,13 +55,12 @@ export default class ForgotPassword extends React.Component {
             style={styles.input}
             keyboardType="email-address"
             returnKeyType="go"
+            onChangeText={(email) => this.setState({ email })}
             autoCorrect={false}
           />
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate("Reset");
-            }}
-          >
+          <Text style={styles.Error}>{this.state.ErrorEmail}</Text>
+
+          <TouchableOpacity onPress={this.myfun}>
             <Text style={styles.forgotText}>Proceed</Text>
           </TouchableOpacity>
         </View>
@@ -37,7 +71,7 @@ export default class ForgotPassword extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0B0D0C",
+    backgroundColor: "#242625",
   },
   rpText: {
     color: "#FDB900",
@@ -65,6 +99,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#FFFFFF",
     fontFamily: "black",
+  },
+  Error: {
+    marginTop: 1,
+    paddingLeft: 20,
+    fontSize: 15,
+    fontFamily: "regular",
+    color: "red",
   },
   forgotText: {
     color: "#FFFF",

@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 export default class ForgotPassword extends React.Component {
   render() {
@@ -90,26 +90,26 @@ export default class ForgotPassword extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0B0D0C"
+    backgroundColor: "#242625",
   },
   rpText: {
     color: "#FDB900",
     fontSize: 18,
     textAlign: "center",
     marginTop: 55,
-    fontFamily: "Semibold"
+    fontFamily: "Semibold",
   },
   OTP: {
     marginTop: 37,
     color: "#ffff",
     fontSize: 15,
     fontFamily: "regular",
-    textAlign: "center"
+    textAlign: "center",
   },
   OTPContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginHorizontal: 50
+    marginHorizontal: 50,
   },
   input: {
     marginTop: 30,
@@ -118,19 +118,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 11,
     width: 40,
     height: 50,
-    backgroundColor: "#0B0D0C",
+    backgroundColor: "#242625",
     borderBottomColor: "#FDB900",
     borderBottomWidth: 1,
     fontSize: 30,
     color: "#FFFFFF",
-    fontFamily: "black"
+    fontFamily: "black",
   },
   newPassText: {
     marginTop: 37,
     color: "#ffff",
     fontSize: 15,
     fontFamily: "regular",
-    textAlign: "center"
+    textAlign: "center",
   },
   email: {
     marginTop: 20,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 20,
     color: "#FFFFFF",
-    fontFamily: "black"
+    fontFamily: "black",
   },
   forgotText: {
     color: "#FFFF",
@@ -156,6 +156,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 138,
     paddingVertical: 10,
     paddingHorizontal: 22,
-    borderRadius: 10
-  }
+    borderRadius: 10,
+  },
 });

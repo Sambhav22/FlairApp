@@ -2,8 +2,6 @@ import React from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
 import Routes from "./components/Routes";
-import { NavigationContainer, createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
 
 class App extends React.Component {
   constructor() {
@@ -38,7 +36,7 @@ class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#242625",
   },
 });
 export default App;
