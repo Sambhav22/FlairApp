@@ -8,6 +8,7 @@ import {
   Keyboard,
   TouchableOpacity,
   Button,
+  AsyncStorage,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -21,26 +22,61 @@ export default class Login extends React.Component {
       pass: "",
     };
   }
+  componentDidMount() {
+    this._loadIntialState().done();
+  }
+  _loadIntialState = async () => {
+    var value = await AsyncStorage.getItem("email");
+    if (value != null) {
+      this.props.navigation.navigate("Profile");
+    }
+  };
 
   myfun = () => {
+    Keyboard.dismiss();
     const { email, pass } = this.state;
+    var empty = false;
     if (email == "") {
       this.setState({
         ErrorEmail: "Please Enter your Email Address or Mobile Number",
       });
+      empty = true;
     }
     if (pass == "") {
       this.setState({
         ErrorPass: "Please Enter your Password",
       });
+      empty = true;
     }
-    Keyboard.dismiss();
+
     setTimeout(() => {
       this.setState({
         ErrorEmail: "",
         ErrorPass: "",
       });
     }, 3000);
+    if (empty == false) {
+      fetch("http://35.154.138.192:3000/auth/login", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          login: this.state.email,
+          password: this.state.pass,
+        }),
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          if (res.type == "success") {
+            alert(res.message);
+          } else {
+            alert("Either Email or Password Incorrect");
+          }
+        })
+        .done();
+    }
   };
   render() {
     return (
