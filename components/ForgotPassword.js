@@ -22,10 +22,13 @@ export default class ForgotPassword extends React.Component {
     Keyboard.dismiss();
 
     const emailReg = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    const noReg = /^[6-9]\d{9}$/;
+    const emailcheck = /^[A-Za-z]$/;
+    const nocheck = /^[0-9]$/;
     const { email } = this.state;
     if (email == "") {
       this.setState({
-        ErrorEmail: "Please Enter your Email Address",
+        ErrorEmail: "Please Enter your Email Address/Mobile Number",
       });
 
       setTimeout(() => {
@@ -33,17 +36,43 @@ export default class ForgotPassword extends React.Component {
           ErrorEmail: "",
         });
       }, 3000);
-    } else if (!email.match(emailReg)) {
-      this.setState({
-        ErrorEmail: "Please Enter Valid Email Address.",
-      });
-      Keyboard.dismiss();
-      setTimeout(() => {
-        this.setState({
-          ErrorEmail: "",
-        });
-      }, 3000);
     } else {
+      if (email[0].match(emailcheck)) {
+        if (!email.match(emailReg)) {
+          this.setState({
+            ErrorEmail: "Please Enter Valid Email Address.",
+          });
+          Keyboard.dismiss();
+          setTimeout(() => {
+            this.setState({
+              ErrorEmail: "",
+            });
+          }, 3000);
+          return;
+        }
+      }
+      if (email[0].match(nocheck)) {
+        if (!email.match(noReg)) {
+          this.setState({
+            ErrorEmail: "Please Enter Valid Mobile Number",
+          });
+          Keyboard.dismiss();
+          setTimeout(() => {
+            this.setState({
+              ErrorEmail: "",
+            });
+          }, 3000);
+          return;
+        }
+      }
+      var channel1;
+
+      if (email.match(noReg)) {
+        channel1 = "mobile";
+      }
+      if (email.match(emailReg)) {
+        channel1 = "email";
+      }
       fetch("http://35.154.138.192:3000/auth/sendotp", {
         method: "POST",
         headers: {
@@ -51,7 +80,7 @@ export default class ForgotPassword extends React.Component {
         },
         body: JSON.stringify({
           otpType: "reset",
-          channel: "email",
+          channel: channel1,
           login: this.state.email,
         }),
       })
@@ -59,14 +88,21 @@ export default class ForgotPassword extends React.Component {
         .then((res) => {
           if (res.type == "success") {
             this.props.navigation.navigate("Reset", {
-              message: "OTP Sent Successfully. Please Check your Email",
+              message: `OTP Sent Successfully. Please Check your ${channel1}`,
               email: this.state.email,
             });
           } else {
-            alert("Entered Email Address is not registered");
+            this.setState({
+              ErrorEmail: "Entered Email Address is not registered",
+            });
           }
         })
         .done();
+      setTimeout(() => {
+        this.setState({
+          ErrorEmail: "",
+        });
+      }, 3000);
     }
   };
 
@@ -84,7 +120,7 @@ export default class ForgotPassword extends React.Component {
           />
 
           <Text style={styles.rpText}>Reset Password</Text>
-          <Text style={styles.emailText}>What’s your email? </Text>
+          <Text style={styles.emailText}>What’s your Email/Mobile Number?</Text>
           <TextInput
             style={styles.input}
             keyboardType="email-address"

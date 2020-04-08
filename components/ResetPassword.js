@@ -9,10 +9,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
-export default class ForgotPassword extends React.Component {
+
+export default class ForgotPassword1 extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       a: "",
       b: "",
@@ -21,46 +21,75 @@ export default class ForgotPassword extends React.Component {
       e: "",
       f: "",
       message: this.props.navigation.getParam("message", ""),
+      message1: "",
+      pass: "",
+      Error: "",
     };
   }
-  myfun = () => {
+
+  myFun = () => {
+    this.setState({
+      message: "",
+    });
     const { a, b, c, d, e, f } = this.state;
+    var empty = false;
+
     if (a == "" || b == "" || c == "" || d == "" || e == "" || f == "") {
       this.setState({
-        message: "Please Enter Valid OTP.",
+        Error: "Please Enter Valid OTP.",
       });
+      empty = true;
     }
     const email = this.props.navigation.getParam("email", "");
     var OTP = "" + a + b + c + d + e + f;
-    fetch("http://35.154.138.192:3000/auth/verifyotp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        login: email,
-        otp: OTP,
-      }),
-    })
-      .then((response) => response.json())
-      .then((res) => {
-        if (res.type == "success") {
-          this.props.navigation.navigate("Reset", {
-            OTP,
-            email,
-          });
-        } else {
-          this.props.navigation.navigate("Reset1", {
-            OTP,
-            email,
-          });
+    const newPassword = this.state.pass;
+    if (newPassword == "") {
+      this.setState({
+        Error1: "Please Enter New Password.",
+      });
+      empty = true;
+    }
+    if (newPassword.length >= 1) {
+      if (newPassword.length < 6 || newPassword.length > 14) {
+        this.setState({
+          Error1: "Password Length Should be 6-14 Characters.",
+        });
+        empty = true;
+      }
+    }
 
-          //          alert(res.message);
-        }
+    setTimeout(() => {
+      this.setState({
+        Error1: "",
+        Error: "",
+      });
+    }, 3000);
+
+    if (empty == false) {
+      fetch("http://35.154.138.192:3000/auth/resetpassword", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          login: email,
+          newPassword: newPassword,
+          otp: OTP,
+        }),
       })
-      .done();
+        .then((response) => response.json())
+        .then((res) => {
+          if (res.type == "success") {
+            alert("New Updated Successfully.");
+          } else {
+            this.setState({
+              Error: "Incorrect OTP",
+            });
+          }
+        })
+        .done();
+    }
   };
-
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -137,9 +166,25 @@ export default class ForgotPassword extends React.Component {
               ref={"OTP5"}
             />
           </View>
-          <Text style={styles.ErrorText}>{this.state.message}</Text>
-          <TouchableOpacity onPress={this.myfun}>
-            <Text style={styles.buttonText}> Submit</Text>
+          <Text style={styles.Error}>
+            {this.state.message}
+            {this.state.Error}
+          </Text>
+
+          <Text style={styles.newPassText}>Enter new password </Text>
+          <TextInput
+            style={styles.email}
+            returnKeyType="go"
+            onChangeText={(pass) => {
+              this.setState({ pass });
+            }}
+            secureTextEntry={true}
+            autoCorrect={false}
+          />
+          <Text style={styles.Error}>{this.state.Error1}</Text>
+
+          <TouchableOpacity onPress={this.myFun}>
+            <Text style={styles.forgotText}>Reset</Text>
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>
@@ -158,6 +203,14 @@ const styles = StyleSheet.create({
     marginTop: 15,
     fontFamily: "Semibold",
   },
+  Error: {
+    marginTop: 3,
+    textAlign: "center",
+    fontSize: 17,
+    fontFamily: "regular",
+    color: "red",
+  },
+
   OTP: {
     marginTop: 37,
     color: "#ffff",

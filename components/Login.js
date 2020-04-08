@@ -10,7 +10,6 @@ import {
   Button,
   AsyncStorage,
 } from "react-native";
-import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
 import Forgot from "./ForgotPassword";
@@ -126,6 +125,7 @@ export default class Login extends React.Component {
               <TouchableOpacity onPress={this.myfun}>
                 <LinearGradient
                   colors={["#FDB900", "#B16D00"]}
+                  start={[0, 0.5]}
                   style={styles.buttonContainer}
                 >
                   <Text style={styles.buttonText}> Login</Text>
