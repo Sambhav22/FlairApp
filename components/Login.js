@@ -10,6 +10,7 @@ import {
   Button,
   AsyncStorage,
 } from "react-native";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
 import Forgot from "./ForgotPassword";
@@ -48,7 +49,6 @@ export default class Login extends React.Component {
       });
       empty = true;
     }
-
     setTimeout(() => {
       this.setState({
         ErrorEmail: "",

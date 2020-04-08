@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
+
 export default class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
@@ -17,6 +19,8 @@ export default class ForgotPassword extends React.Component {
     };
   }
   myfun = () => {
+    Keyboard.dismiss();
+
     const emailReg = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
     const { email } = this.state;
     if (email == "") {
@@ -24,7 +28,6 @@ export default class ForgotPassword extends React.Component {
         ErrorEmail: "Please Enter your Email Address",
       });
 
-      Keyboard.dismiss();
       setTimeout(() => {
         this.setState({
           ErrorEmail: "",
@@ -41,7 +44,29 @@ export default class ForgotPassword extends React.Component {
         });
       }, 3000);
     } else {
-      this.props.navigation.navigate("Reset");
+      fetch("http://35.154.138.192:3000/auth/sendotp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          otpType: "reset",
+          channel: "email",
+          login: this.state.email,
+        }),
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          if (res.type == "success") {
+            this.props.navigation.navigate("Reset", {
+              message: "OTP Sent Successfully. Please Check your Email",
+              email: this.state.email,
+            });
+          } else {
+            alert("Entered Email Address is not registered");
+          }
+        })
+        .done();
     }
   };
 
@@ -49,6 +74,15 @@ export default class ForgotPassword extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
+          <Icon
+            style={{ color: "#FFFFFF", paddingLeft: 374, paddingTop: 25 }}
+            name="close"
+            size={25}
+            onPress={() => {
+              this.props.navigation.navigate("Login");
+            }}
+          />
+
           <Text style={styles.rpText}>Reset Password</Text>
           <Text style={styles.emailText}>What’s your email? </Text>
           <TextInput
@@ -77,7 +111,7 @@ const styles = StyleSheet.create({
     color: "#FDB900",
     fontSize: 18,
     textAlign: "center",
-    marginTop: 55,
+    marginTop: 15,
     fontFamily: "Semibold",
   },
   emailText: {
