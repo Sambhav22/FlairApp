@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
@@ -20,13 +21,20 @@ export default class ForgotPassword1 extends React.Component {
       d: "",
       e: "",
       f: "",
+      indicator: false,
       message: this.props.navigation.getParam("message", ""),
       message1: "",
       pass: "",
       Error: "",
+      show: false,
     };
   }
-
+  function() {
+    $("#myInput").on("input", function () {
+      // Print entered value in a div box
+      $("#result").text($(this).val());
+    });
+  }
   myFun = () => {
     this.setState({
       message: "",
@@ -66,6 +74,8 @@ export default class ForgotPassword1 extends React.Component {
     }, 3000);
 
     if (empty == false) {
+      this.setState({ indicator: true });
+
       fetch("http://35.154.138.192:3000/auth/resetpassword", {
         method: "PUT",
         headers: {
@@ -79,6 +89,8 @@ export default class ForgotPassword1 extends React.Component {
       })
         .then((response) => response.json())
         .then((res) => {
+          this.setState({ indicator: false });
+
           if (res.type == "success") {
             alert("New Updated Successfully.");
           } else {
@@ -94,98 +106,116 @@ export default class ForgotPassword1 extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <Icon
-            style={{ color: "#FFFFFF", paddingLeft: 374, paddingTop: 25 }}
-            name="close"
-            size={25}
-            onPress={() => {
-              this.props.navigation.navigate("Login");
-            }}
-          />
+          {this.state.indicator ? (
+            <ActivityIndicator style={{ flex: 1 }} size="large" color="white" />
+          ) : (
+            <View>
+              <Icon
+                style={{
+                  paddingLeft: 374,
+                  paddingTop: 25,
+                  color: "#FFFFFF",
+                  paddingTop: 25,
+                }}
+                name="close"
+                size={25}
+                onPress={() => {
+                  this.props.navigation.navigate("Login");
+                }}
+              />
 
-          <Text style={styles.rpText}>Reset Password</Text>
-          <Text style={styles.OTP}>Enter One Time Password (OTP) </Text>
-          <View style={styles.OTPContainer}>
-            <TextInput
-              style={styles.input}
-              keyboardType="numeric"
-              returnKeyType="next"
-              onChangeText={(a) => this.setState({ a })}
-              autoCorrect={false}
-              maxLength={1}
-              onSubmitEditing={() => this.refs.OTP1.focus()}
-            />
-            <TextInput
-              style={styles.input}
-              keyboardType="numeric"
-              returnKeyType="next"
-              onChangeText={(b) => this.setState({ b })}
-              autoCorrect={false}
-              maxLength={1}
-              ref={"OTP1"}
-              onSubmitEditing={() => this.refs.OTP2.focus()}
-            />
-            <TextInput
-              style={styles.input}
-              keyboardType="numeric"
-              returnKeyType="next"
-              onChangeText={(c) => this.setState({ c })}
-              autoCorrect={false}
-              maxLength={1}
-              ref={"OTP2"}
-              onSubmitEditing={() => this.refs.OTP3.focus()}
-            />
-            <TextInput
-              style={styles.input}
-              keyboardType="numeric"
-              returnKeyType="next"
-              onChangeText={(d) => this.setState({ d })}
-              autoCorrect={false}
-              maxLength={1}
-              ref={"OTP3"}
-              onSubmitEditing={() => this.refs.OTP4.focus()}
-            />
-            <TextInput
-              style={styles.input}
-              keyboardType="numeric"
-              returnKeyType="next"
-              onChangeText={(e) => this.setState({ e })}
-              autoCorrect={false}
-              maxLength={1}
-              ref={"OTP4"}
-              onSubmitEditing={() => this.refs.OTP5.focus()}
-            />
+              <Text style={styles.rpText}>Reset Password</Text>
+              <Text style={styles.OTP}>Enter One Time Password (OTP) </Text>
+              <View style={styles.OTPContainer}>
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  returnKeyType="next"
+                  onChangeText={(a) => this.setState({ a })}
+                  autoCorrect={false}
+                  maxLength={1}
+                  onSubmitEditing={() => this.refs.OTP1.focus()}
+                />
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  returnKeyType="next"
+                  onChangeText={(b) => this.setState({ b })}
+                  autoCorrect={false}
+                  maxLength={1}
+                  ref={"OTP1"}
+                  onSubmitEditing={() => this.refs.OTP2.focus()}
+                />
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  returnKeyType="next"
+                  onChangeText={(c) => this.setState({ c })}
+                  autoCorrect={false}
+                  maxLength={1}
+                  ref={"OTP2"}
+                  onSubmitEditing={() => this.refs.OTP3.focus()}
+                />
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  returnKeyType="next"
+                  onChangeText={(d) => this.setState({ d })}
+                  autoCorrect={false}
+                  maxLength={1}
+                  ref={"OTP3"}
+                  onSubmitEditing={() => this.refs.OTP4.focus()}
+                />
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  returnKeyType="next"
+                  onChangeText={(e) => this.setState({ e })}
+                  autoCorrect={false}
+                  maxLength={1}
+                  ref={"OTP4"}
+                  onSubmitEditing={() => this.refs.OTP5.focus()}
+                />
 
-            <TextInput
-              style={styles.input}
-              keyboardType="numeric"
-              returnKeyType="next"
-              onChangeText={(f) => this.setState({ f })}
-              autoCorrect={false}
-              maxLength={1}
-              ref={"OTP5"}
-            />
-          </View>
-          <Text style={styles.Error}>
-            {this.state.message}
-            {this.state.Error}
-          </Text>
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  returnKeyType="next"
+                  onChangeText={(f) => this.setState({ f })}
+                  onChange={() => {
+                    this.setState({ show: true });
+                  }}
+                  autoCorrect={false}
+                  maxLength={1}
+                  ref={"OTP5"}
+                />
+              </View>
+              <Text style={styles.Error}>
+                {this.state.message}
+                {this.state.Error}
+              </Text>
 
-          <Text style={styles.newPassText}>Enter new password </Text>
-          <TextInput
-            style={styles.email}
-            returnKeyType="go"
-            onChangeText={(pass) => {
-              this.setState({ pass });
-            }}
-            secureTextEntry={true}
-            autoCorrect={false}
-          />
-          <Text style={styles.Error}>{this.state.Error1}</Text>
+              {this.state.show ? (
+                <View>
+                  <Text style={styles.newPassText}>Enter new password </Text>
+                  <TextInput
+                    style={styles.email}
+                    returnKeyType="go"
+                    onChangeText={(pass) => {
+                      this.setState({ pass });
+                    }}
+                    secureTextEntry={true}
+                    autoCorrect={false}
+                  />
+                  <Text style={styles.Error}>{this.state.Error1}</Text>
 
-          <TouchableOpacity onPress={this.myFun}>
-            <Text style={styles.forgotText}>Reset</Text>
-          </TouchableOpacity>
+                  <TouchableOpacity onPress={this.myFun}>
+                    <Text style={styles.forgotText}>Reset</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+            </View>
+          )}
         </View>
       </TouchableWithoutFeedback>
     );

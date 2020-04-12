@@ -27,7 +27,7 @@ class App extends React.Component {
         {this.state.fontLoaded ? (
           <Routes />
         ) : (
-          <ActivityIndicator size="large" style={{ flex: 1 }} />
+          <ActivityIndicator size="large" style={{ flex: 1 }} color="white" />
         )}
       </View>
     );

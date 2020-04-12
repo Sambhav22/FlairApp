@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Button,
   AsyncStorage,
+  ActivityIndicator,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -20,17 +21,9 @@ export default class Login extends React.Component {
     this.state = {
       email: "",
       pass: "",
+      indicator: false,
     };
   }
-  componentDidMount() {
-    this._loadIntialState().done();
-  }
-  _loadIntialState = async () => {
-    var value = await AsyncStorage.getItem("email");
-    if (value != null) {
-      this.props.navigation.navigate("Profile");
-    }
-  };
 
   myfun = () => {
     Keyboard.dismiss();
@@ -55,6 +48,7 @@ export default class Login extends React.Component {
       });
     }, 3000);
     if (empty == false) {
+      this.setState({ indicator: true });
       fetch("http://35.154.138.192:3000/auth/login", {
         method: "POST",
         headers: {
@@ -68,6 +62,7 @@ export default class Login extends React.Component {
       })
         .then((response) => response.json())
         .then((res) => {
+          this.setState({ indicator: false });
           if (res.type == "success") {
             alert(res.message);
           } else {
@@ -80,60 +75,66 @@ export default class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
-            <View style={styles.loginContainer}>
-              <Text style={styles.loginText}>Login</Text>
-            </View>
-            <View style={styles.baseContainer}>
-              <Text style={styles.emailText}>Email Address/Mobile Number</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Email/Mobile"
-                placeholderTextColor="#555555"
-                keyboardType="email-address"
-                onChangeText={(email) => this.setState({ email })}
-                returnKeyType="next"
-                autoCorrect={false}
-                onSubmitEditing={() => this.refs.txtPassword.focus()}
-              />
-              <Text style={styles.Error}>{this.state.ErrorEmail}</Text>
-              <Text style={styles.passwordText}>Password</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                placeholderTextColor="#555555"
-                onChangeText={(pass) => {
-                  this.setState({ pass });
-                }}
-                returnKeyType="go"
-                secureTextEntry={true}
-                autoCorrect={false}
-                ref={"txtPassword"}
-              />
-              <Text style={styles.Error}>{this.state.ErrorPass}</Text>
+        {this.state.indicator ? (
+          <ActivityIndicator style={{ flex: 1 }} size="large" color="white" />
+        ) : (
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View>
+              <View style={styles.loginContainer}>
+                <Text style={styles.loginText}>Login</Text>
+              </View>
+              <View style={styles.baseContainer}>
+                <Text style={styles.emailText}>
+                  Email Address/Mobile Number
+                </Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email/Mobile"
+                  placeholderTextColor="#555555"
+                  keyboardType="email-address"
+                  onChangeText={(email) => this.setState({ email })}
+                  returnKeyType="next"
+                  autoCorrect={false}
+                  onSubmitEditing={() => this.refs.txtPassword.focus()}
+                />
+                <Text style={styles.Error}>{this.state.ErrorEmail}</Text>
+                <Text style={styles.passwordText}>Password</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  placeholderTextColor="#555555"
+                  onChangeText={(pass) => {
+                    this.setState({ pass });
+                  }}
+                  returnKeyType="go"
+                  secureTextEntry={true}
+                  autoCorrect={false}
+                  ref={"txtPassword"}
+                />
+                <Text style={styles.Error}>{this.state.ErrorPass}</Text>
 
-              <TouchableOpacity
-                style={{ marginHorizontal: 110 }}
-                onPress={() => {
-                  this.props.navigation.navigate("Forgot");
-                }}
-              >
-                <Text style={styles.forgotText}>Forgot Password?</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity onPress={this.myfun}>
-                <LinearGradient
-                  colors={["#FDB900", "#B16D00"]}
-                  start={[0, 0.5]}
-                  style={styles.buttonContainer}
+                <TouchableOpacity
+                  style={{ marginHorizontal: 110 }}
+                  onPress={() => {
+                    this.props.navigation.navigate("Forgot");
+                  }}
                 >
-                  <Text style={styles.buttonText}> Login</Text>
-                </LinearGradient>
-              </TouchableOpacity>
+                  <Text style={styles.forgotText}>Forgot Password?</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={this.myfun}>
+                  <LinearGradient
+                    colors={["#FDB900", "#B16D00"]}
+                    start={[0, 0.5]}
+                    style={styles.buttonContainer}
+                  >
+                    <Text style={styles.buttonText}> Login</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        )}
       </View>
     );
   }

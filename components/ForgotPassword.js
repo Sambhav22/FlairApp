@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
@@ -16,6 +17,7 @@ export default class ForgotPassword extends React.Component {
     super(props);
     this.state = {
       email: "",
+      indicator: false,
     };
   }
   myfun = () => {
@@ -73,6 +75,7 @@ export default class ForgotPassword extends React.Component {
       if (email.match(emailReg)) {
         channel1 = "email";
       }
+      this.setState({ indicator: true });
       fetch("http://35.154.138.192:3000/auth/sendotp", {
         method: "POST",
         headers: {
@@ -86,6 +89,8 @@ export default class ForgotPassword extends React.Component {
       })
         .then((response) => response.json())
         .then((res) => {
+          this.setState({ indicator: false });
+
           if (res.type == "success") {
             this.props.navigation.navigate("Reset", {
               message: `OTP Sent Successfully. Please Check your ${channel1}`,
@@ -110,29 +115,37 @@ export default class ForgotPassword extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <Icon
-            style={{ color: "#FFFFFF", paddingLeft: 374, paddingTop: 25 }}
-            name="close"
-            size={25}
-            onPress={() => {
-              this.props.navigation.navigate("Login");
-            }}
-          />
+          {this.state.indicator ? (
+            <ActivityIndicator style={{ flex: 1 }} size="large" color="white" />
+          ) : (
+            <View>
+              <Icon
+                style={{ color: "#FFFFFF", paddingLeft: 374, paddingTop: 25 }}
+                name="close"
+                size={25}
+                onPress={() => {
+                  this.props.navigation.navigate("Login");
+                }}
+              />
 
-          <Text style={styles.rpText}>Reset Password</Text>
-          <Text style={styles.emailText}>What’s your Email/Mobile Number?</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="email-address"
-            returnKeyType="go"
-            onChangeText={(email) => this.setState({ email })}
-            autoCorrect={false}
-          />
-          <Text style={styles.Error}>{this.state.ErrorEmail}</Text>
+              <Text style={styles.rpText}>Reset Password</Text>
+              <Text style={styles.emailText}>
+                What’s your Email/Mobile Number?
+              </Text>
+              <TextInput
+                style={styles.input}
+                keyboardType="email-address"
+                returnKeyType="go"
+                onChangeText={(email) => this.setState({ email })}
+                autoCorrect={false}
+              />
+              <Text style={styles.Error}>{this.state.ErrorEmail}</Text>
 
-          <TouchableOpacity onPress={this.myfun}>
-            <Text style={styles.forgotText}>Proceed</Text>
-          </TouchableOpacity>
+              <TouchableOpacity onPress={this.myfun}>
+                <Text style={styles.forgotText}>Proceed</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </TouchableWithoutFeedback>
     );
