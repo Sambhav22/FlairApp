@@ -76,7 +76,7 @@ export default class ForgotPassword1 extends React.Component {
     if (empty == false) {
       this.setState({ indicator: true });
 
-      fetch("http://35.154.138.192:3000/auth/resetpassword", {
+      fetch("http://api-staging.sleeping8.com/auth/resetpassword", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -93,6 +93,7 @@ export default class ForgotPassword1 extends React.Component {
 
           if (res.type == "success") {
             alert("New Updated Successfully.");
+            this.props.navigation.navigate("Login");
           } else {
             this.setState({
               Error: "Incorrect OTP",
@@ -132,49 +133,49 @@ export default class ForgotPassword1 extends React.Component {
                   keyboardType="numeric"
                   returnKeyType="next"
                   onChangeText={(a) => this.setState({ a })}
+                  onChange={() => this.refs.OTP1.focus()}
                   autoCorrect={false}
                   maxLength={1}
-                  onSubmitEditing={() => this.refs.OTP1.focus()}
                 />
                 <TextInput
                   style={styles.input}
                   keyboardType="numeric"
                   returnKeyType="next"
                   onChangeText={(b) => this.setState({ b })}
+                  onChange={() => this.refs.OTP2.focus()}
                   autoCorrect={false}
                   maxLength={1}
                   ref={"OTP1"}
-                  onSubmitEditing={() => this.refs.OTP2.focus()}
                 />
                 <TextInput
                   style={styles.input}
                   keyboardType="numeric"
                   returnKeyType="next"
                   onChangeText={(c) => this.setState({ c })}
+                  onChange={() => this.refs.OTP3.focus()}
                   autoCorrect={false}
                   maxLength={1}
                   ref={"OTP2"}
-                  onSubmitEditing={() => this.refs.OTP3.focus()}
                 />
                 <TextInput
                   style={styles.input}
                   keyboardType="numeric"
                   returnKeyType="next"
                   onChangeText={(d) => this.setState({ d })}
+                  onChange={() => this.refs.OTP4.focus()}
                   autoCorrect={false}
                   maxLength={1}
                   ref={"OTP3"}
-                  onSubmitEditing={() => this.refs.OTP4.focus()}
                 />
                 <TextInput
                   style={styles.input}
                   keyboardType="numeric"
                   returnKeyType="next"
                   onChangeText={(e) => this.setState({ e })}
+                  onChange={() => this.refs.OTP5.focus()}
                   autoCorrect={false}
                   maxLength={1}
                   ref={"OTP4"}
-                  onSubmitEditing={() => this.refs.OTP5.focus()}
                 />
 
                 <TextInput

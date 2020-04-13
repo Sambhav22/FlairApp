@@ -8,6 +8,7 @@ import {
   Keyboard,
   TouchableOpacity,
   ActivityIndicator,
+  Image,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
@@ -76,7 +77,7 @@ export default class ForgotPassword extends React.Component {
         channel1 = "email";
       }
       this.setState({ indicator: true });
-      fetch("http://35.154.138.192:3000/auth/sendotp", {
+      fetch("http://api-staging.sleeping8.com/auth/sendotp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -129,16 +130,28 @@ export default class ForgotPassword extends React.Component {
               />
 
               <Text style={styles.rpText}>Reset Password</Text>
-              <Text style={styles.emailText}>
-                What’s your Email/Mobile Number?
-              </Text>
-              <TextInput
-                style={styles.input}
-                keyboardType="email-address"
-                returnKeyType="go"
-                onChangeText={(email) => this.setState({ email })}
-                autoCorrect={false}
-              />
+
+              <Text style={styles.emailText}>What’s your Email?</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Image
+                  style={{
+                    width: 16,
+                    height: 16,
+                    marginTop: 22,
+                    marginLeft: 15,
+                    paddingLeft: 15,
+                    zIndex: 1,
+                  }}
+                  source={require("../assets/search.png")}
+                />
+                <TextInput
+                  style={styles.input}
+                  keyboardType="email-address"
+                  returnKeyType="go"
+                  onChangeText={(email) => this.setState({ email })}
+                  autoCorrect={false}
+                />
+              </View>
               <Text style={styles.Error}>{this.state.ErrorEmail}</Text>
 
               <TouchableOpacity onPress={this.myfun}>
@@ -171,10 +184,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   input: {
+    zIndex: 0,
+    flex: 1,
     marginTop: 10,
-    marginLeft: 10,
+    marginLeft: -20,
     marginRight: 20,
     height: 40,
+    paddingLeft: 26,
     padding: 4,
     backgroundColor: "#555555",
     borderBottomColor: "#FFFFFF",

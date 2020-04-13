@@ -11,6 +11,7 @@ import {
   AsyncStorage,
   ActivityIndicator,
 } from "react-native";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
 import Forgot from "./ForgotPassword";
@@ -22,9 +23,14 @@ export default class Login extends React.Component {
       email: "",
       pass: "",
       indicator: false,
+      secureTextEntry: true,
     };
   }
-
+  onIconPress = () => {
+    this.setState({
+      secureTextEntry: !this.state.secureTextEntry,
+    });
+  };
   myfun = () => {
     Keyboard.dismiss();
     const { email, pass } = this.state;
@@ -49,7 +55,7 @@ export default class Login extends React.Component {
     }, 3000);
     if (empty == false) {
       this.setState({ indicator: true });
-      fetch("http://35.154.138.192:3000/auth/login", {
+      fetch("http://api-staging.sleeping8.com/auth/login", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -65,8 +71,10 @@ export default class Login extends React.Component {
           this.setState({ indicator: false });
           if (res.type == "success") {
             alert(res.message);
+            this.setState({ email: "", pass: "" });
           } else {
             alert("Either Email or Password Incorrect");
+            this.setState({ email: "", pass: "" });
           }
         })
         .done();
@@ -97,20 +105,34 @@ export default class Login extends React.Component {
                   autoCorrect={false}
                   onSubmitEditing={() => this.refs.txtPassword.focus()}
                 />
+
                 <Text style={styles.Error}>{this.state.ErrorEmail}</Text>
                 <Text style={styles.passwordText}>Password</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Password"
-                  placeholderTextColor="#555555"
-                  onChangeText={(pass) => {
-                    this.setState({ pass });
-                  }}
-                  returnKeyType="go"
-                  secureTextEntry={true}
-                  autoCorrect={false}
-                  ref={"txtPassword"}
-                />
+                <View style={{ flexDirection: "row" }}>
+                  <TextInput
+                    style={styles.input1}
+                    placeholder="Password"
+                    placeholderTextColor="#555555"
+                    onChangeText={(pass) => {
+                      this.setState({ pass });
+                    }}
+                    returnKeyType="go"
+                    secureTextEntry={this.state.secureTextEntry}
+                    autoCorrect={false}
+                    ref={"txtPassword"}
+                  />
+                  <TouchableOpacity onPress={this.onIconPress}>
+                    <Icon
+                      name="eye"
+                      style={{
+                        marginRight: 20,
+                        marginTop: 20,
+                        color: "#FDB900",
+                      }}
+                      size={28}
+                    ></Icon>
+                  </TouchableOpacity>
+                </View>
                 <Text style={styles.Error}>{this.state.ErrorPass}</Text>
 
                 <TouchableOpacity
@@ -163,6 +185,20 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 20,
     marginRight: 20,
+    height: 50,
+    paddingBottom: 10,
+    backgroundColor: "#242625",
+    borderBottomColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    fontSize: 30,
+    color: "#FFFFFF",
+    fontFamily: "black",
+  },
+  input1: {
+    flex: 1,
+    marginTop: 15,
+    marginLeft: 20,
+    marginRight: -30,
     height: 50,
     paddingBottom: 10,
     backgroundColor: "#242625",
