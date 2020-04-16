@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
-import Routes from "./components/Routes";
+import Routes from "./tabComponents/Routes";
 
 class App extends React.Component {
   constructor() {
