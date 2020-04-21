@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Upcoming from "./Upcoming";
 import Calendar from "./Calendar";
 import Account from "./Account";
+import Login from "../components/Login";
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +46,7 @@ export default function Routes() {
       >
         <Tab.Screen name="Upcoming" component={Upcoming} />
         <Tab.Screen name="Calendar" component={Calendar} />
-        <Tab.Screen name="Account" component={Account} />
+        <Tab.Screen default name="Account" component={Account} />
       </Tab.Navigator>
     </NavigationContainer>
   );

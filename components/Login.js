@@ -70,10 +70,12 @@ export default class Login extends React.Component {
         .then((res) => {
           this.setState({ indicator: false });
           if (res.type == "success") {
-            alert(res.message);
+            this.props.navigation.navigate("Account");
             this.setState({ email: "", pass: "" });
           } else {
-            alert("Either Email or Password Incorrect");
+            this.props.navigation.navigate("Account");
+
+            //    alert("Either Email or Password Incorrect");
             this.setState({ email: "", pass: "" });
           }
         })

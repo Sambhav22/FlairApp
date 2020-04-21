@@ -18,6 +18,7 @@ class App extends React.Component {
       black: require("./assets/fonts/SourceSansPro-Black.ttf"),
       Italic: require("./assets/fonts/SourceSansPro-Italic.ttf"),
       regular: require("./assets/fonts/SourceSansPro-Regular.ttf"),
+      bold: require("./assets/fonts/SourceSansPro-Bold.ttf"),
     });
     this.setState({ fontLoaded: true });
   }
