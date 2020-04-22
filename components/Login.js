@@ -73,7 +73,7 @@ export default class Login extends React.Component {
             this.props.navigation.navigate("Account");
             this.setState({ email: "", pass: "" });
           } else {
-            this.props.navigation.navigate("Account");
+            this.props.navigation.navigate("Route");
 
             //    alert("Either Email or Password Incorrect");
             this.setState({ email: "", pass: "" });

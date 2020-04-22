@@ -4,15 +4,27 @@ import * as React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Upcoming from "./Upcoming";
 import Calendar from "./Calendar";
 import Account from "./Account";
-import Login from "../components/Login";
-
+import Routes from "./Routes";
+import BaseLocation from "./BaseLocation";
+import BasePrice from "./BasePrice";
 const Tab = createBottomTabNavigator();
+const AccountStack = createStackNavigator();
+const AccountStackScreen = ({ navigation, routes }) => {
+  return (
+    <AccountStack.Navigator screenOptions={{ headerShown: false }}>
+      <AccountStack.Screen name="Account" component={Account} />
+      <AccountStack.Screen name="BaseLocation" component={BaseLocation} />
+      <AccountStack.Screen name="BasePrice" component={BasePrice} />
+    </AccountStack.Navigator>
+  );
+};
 
-export default function Routes() {
+export default function Route() {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -46,7 +58,7 @@ export default function Routes() {
       >
         <Tab.Screen name="Upcoming" component={Upcoming} />
         <Tab.Screen name="Calendar" component={Calendar} />
-        <Tab.Screen default name="Account" component={Account} />
+        <Tab.Screen name="Account" component={AccountStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

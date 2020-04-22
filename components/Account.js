@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Routes from "./Routes";
 export default class Account extends React.Component {
   render() {
     return (
@@ -25,7 +26,12 @@ export default class Account extends React.Component {
               size={15}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={{ marginTop: 5, flexDirection: "row" }}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("BaseLocation");
+            }}
+            style={{ marginTop: 5, flexDirection: "row" }}
+          >
             <Ionicons name="ios-notifications" color="green" size={40} />
             <Text style={styles.notText}>Base Location</Text>
             <Ionicons
@@ -35,7 +41,12 @@ export default class Account extends React.Component {
               size={15}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={{ marginTop: 5, flexDirection: "row" }}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("BasePrice");
+            }}
+            style={{ marginTop: 5, flexDirection: "row" }}
+          >
             <Ionicons name="ios-pricetag" color="yellow" size={30} />
             <Text style={styles.baseText}>Base Price</Text>
             <Ionicons
@@ -71,7 +82,7 @@ export default class Account extends React.Component {
         >
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("Login");
+              this.props.navigation.popToTop();
             }}
           >
             <Text style={styles.logoutText}>Logout</Text>
