@@ -82,7 +82,7 @@ export default class Account extends React.Component {
         >
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.popToTop();
+              this.props.navigation.navigate("Login");
             }}
           >
             <Text style={styles.logoutText}>Logout</Text>

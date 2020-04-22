@@ -70,7 +70,7 @@ export default class Login extends React.Component {
         .then((res) => {
           this.setState({ indicator: false });
           if (res.type == "success") {
-            this.props.navigation.navigate("Account");
+            this.props.navigation.navigate("Route");
             this.setState({ email: "", pass: "" });
           } else {
             this.props.navigation.navigate("Route");
