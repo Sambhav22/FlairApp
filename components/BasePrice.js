@@ -4,6 +4,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 export default class BaseLocation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      eventPrice: props.route.params.eventPrice,
+    };
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -22,56 +29,141 @@ export default class BaseLocation extends React.Component {
           </TouchableOpacity>
           <Text style={styles.price}>Base Price</Text>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate("BasePriceUpdate");
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.addressText}>Event Category-Type 1</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text
-              style={{
-                width: 350,
-                fontSize: 16,
-                color: "#FFFF",
-                fontFamily: "Semibold",
-                paddingLeft: 21,
-                paddingRight: 15,
-                marginTop: 9,
-              }}
-            >
-              Includes event types such as corporate
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.addressText}>
+            {this.state.eventPrice[0].eventTypeId.name}
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text
+            style={{
+              width: 350,
+              fontSize: 16,
+              color: "#FFFF",
+              fontFamily: "Semibold",
+              paddingLeft: 21,
+              paddingRight: 15,
+              marginTop: 9,
+            }}
+          >
+            {this.state.eventPrice[0].eventTypeId.description}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("BasePriceUpdate", {
+                price: this.state.eventPrice[0].price,
+                name: this.state.eventPrice[0].eventTypeId.name,
+                description: this.state.eventPrice[0].eventTypeId.description,
+              });
+            }}
+          >
+            <Text style={styles.editText}>
+              {this.state.eventPrice[0].price}
             </Text>
-            <Text style={styles.editText}>15000</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate("BasePriceUpdate");
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.addressText}>Event Category-Type 2</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text
-              style={{
-                width: 350,
-                fontSize: 16,
-                color: "#FFFF",
-                fontFamily: "Semibold",
-                paddingLeft: 21,
-                paddingRight: 15,
-                marginTop: 9,
-              }}
-            >
-              Includes event types such as lounges, cafes and nightclubs
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.addressText}>
+            {this.state.eventPrice[1].eventTypeId.name}
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text
+            style={{
+              width: 350,
+              fontSize: 16,
+              color: "#FFFF",
+              fontFamily: "Semibold",
+              paddingLeft: 21,
+              paddingRight: 15,
+              marginTop: 9,
+            }}
+          >
+            {this.state.eventPrice[1].eventTypeId.description}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("BasePriceUpdate", {
+                price: this.state.eventPrice[1].price,
+                name: this.state.eventPrice[1].eventTypeId.name,
+                description: this.state.eventPrice[1].eventTypeId.description,
+              });
+            }}
+          >
+            <Text style={styles.editText}>
+              {this.state.eventPrice[1].price}
             </Text>
-            <Text style={styles.editText}>16000</Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.addressText}>
+            {this.state.eventPrice[2].eventTypeId.name}
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text
+            style={{
+              width: 350,
+              fontSize: 16,
+              color: "#FFFF",
+              fontFamily: "Semibold",
+              paddingLeft: 21,
+              paddingRight: 15,
+              marginTop: 9,
+            }}
+          >
+            {this.state.eventPrice[2].eventTypeId.description}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("BasePriceUpdate", {
+                price: this.state.eventPrice[2].price,
+                name: this.state.eventPrice[2].eventTypeId.name,
+                description: this.state.eventPrice[2].eventTypeId.description,
+              });
+            }}
+          >
+            <Text style={styles.editText}>
+              {this.state.eventPrice[2].price}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.addressText}>
+            {this.state.eventPrice[3].eventTypeId.name}
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text
+            style={{
+              width: 350,
+              fontSize: 16,
+              color: "#FFFF",
+              fontFamily: "Semibold",
+              paddingLeft: 21,
+              paddingRight: 15,
+              marginTop: 9,
+            }}
+          >
+            {this.state.eventPrice[3].eventTypeId.description}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("BasePriceUpdate", {
+                price: this.state.eventPrice[3].price,
+                name: this.state.eventPrice[3].eventTypeId.name,
+                description: this.state.eventPrice[3].eventTypeId.description,
+              });
+            }}
+          >
+            <Text style={styles.editText}>
+              {this.state.eventPrice[3].price}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

@@ -4,6 +4,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 export default class BaseLocation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      price: props.route.params.price,
+      name: props.route.params.name,
+      description: props.route.params.description,
+    };
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -31,7 +40,7 @@ export default class BaseLocation extends React.Component {
               fontFamily: "regular",
             }}
           >
-            Event Category - Type 1
+            {this.state.name}
           </Text>
           <Text
             style={{
@@ -41,7 +50,7 @@ export default class BaseLocation extends React.Component {
               fontFamily: "Semibold",
             }}
           >
-            Includes event types such as corporate
+            {this.state.description}
           </Text>
           <TextInput
             style={styles.input}
@@ -49,6 +58,9 @@ export default class BaseLocation extends React.Component {
             returnKeyType="go"
             onChangeText={(email) => this.setState({ email })}
             autoCorrect={false}
+            onChangeText={(price) => this.setState({ price })}
+            value={this.state.price}
+            placeholderTextColor="#FFFF"
           />
           <TouchableOpacity
             onPress={() => {

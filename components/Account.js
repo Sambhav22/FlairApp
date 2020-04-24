@@ -12,6 +12,7 @@ export default class Account extends React.Component {
       address: props.route.params.address,
       lng: props.route.params.lng,
       lat: props.route.params.lat,
+      eventPrice: props.route.params.eventPrice,
     };
   }
   render() {
@@ -58,7 +59,9 @@ export default class Account extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("BasePrice");
+              this.props.navigation.navigate("BasePrice", {
+                eventPrice: this.state.eventPrice,
+              });
             }}
             style={{ marginTop: 5, flexDirection: "row" }}
           >

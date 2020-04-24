@@ -101,6 +101,7 @@ export default class Login extends React.Component {
                         var address = res.data.address;
                         var lng = res.data.coordinates.lng;
                         var lat = res.data.coordinates.lat;
+                        var eventPrice = res.data.eventPrice;
                         this.props.navigation.navigate("AccountStackScreen", {
                           screen: "Account",
                           params: {
@@ -110,6 +111,7 @@ export default class Login extends React.Component {
                             address,
                             lng,
                             lat,
+                            eventPrice,
                           },
                         });
                       }
