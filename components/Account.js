@@ -2,8 +2,18 @@ import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Routes from "./Routes";
 export default class Account extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: props.route.params.user,
+      image: props.route.params.image,
+      city: props.route.params.city,
+      address: props.route.params.address,
+      lng: props.route.params.lng,
+      lat: props.route.params.lat,
+    };
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -13,7 +23,7 @@ export default class Account extends React.Component {
             style={styles.image}
             source={require("../assets/martin.png")}
           />
-          <Text style={styles.nameText}>Martin Garrix</Text>
+          <Text style={styles.nameText}>{this.state.user}</Text>
         </View>
         <View style={styles.notContainer}>
           <TouchableOpacity style={{ flexDirection: "row" }}>
@@ -28,7 +38,12 @@ export default class Account extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("BaseLocation");
+              this.props.navigation.navigate("BaseLocation", {
+                city: this.state.city,
+                address: this.state.address,
+                lat: this.state.lat,
+                lng: this.state.lng,
+              });
             }}
             style={{ marginTop: 5, flexDirection: "row" }}
           >
@@ -92,6 +107,7 @@ export default class Account extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

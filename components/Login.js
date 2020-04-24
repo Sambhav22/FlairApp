@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -70,12 +70,56 @@ export default class Login extends React.Component {
         .then((res) => {
           this.setState({ indicator: false });
           if (res.type == "success") {
-            this.props.navigation.navigate("Route");
+            var token = res.token;
+            fetch("http://api-staging.sleeping8.com/user/me", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: token,
+              },
+            })
+              .then((response) => response.json())
+              .then((res) => {
+                if (res.type == "success") {
+                  var fullname = res.data.fullName;
+                  var image = res.data.profilePic.imagePaths.path;
+
+                  fetch(
+                    "http://api-staging.sleeping8.com/bookingdetail/get_info/me",
+                    {
+                      method: "GET",
+                      headers: {
+                        "Content-Type": "application/json",
+                        authorization: token,
+                      },
+                    }
+                  )
+                    .then((response) => response.json())
+                    .then((res) => {
+                      if (res.type == "success") {
+                        var city = res.data.city;
+                        var address = res.data.address;
+                        var lng = res.data.coordinates.lng;
+                        var lat = res.data.coordinates.lat;
+                        this.props.navigation.navigate("AccountStackScreen", {
+                          screen: "Account",
+                          params: {
+                            user: fullname,
+                            image: image,
+                            city,
+                            address,
+                            lng,
+                            lat,
+                          },
+                        });
+                      }
+                    });
+                }
+              });
+
             this.setState({ email: "", pass: "" });
           } else {
-            this.props.navigation.navigate("Route");
-
-            //    alert("Either Email or Password Incorrect");
+            alert("Either Email or Password Incorrect");
             this.setState({ email: "", pass: "" });
           }
         })

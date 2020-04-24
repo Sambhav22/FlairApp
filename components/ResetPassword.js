@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
-export default class ForgotPassword1 extends React.Component {
+export default class ResetPassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,7 +22,7 @@ export default class ForgotPassword1 extends React.Component {
       e: "",
       f: "",
       indicator: false,
-      message: this.props.navigation.getParam("message", ""),
+      message: props.route.params.message,
       message1: "",
       pass: "",
       Error: "",

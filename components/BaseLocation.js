@@ -1,10 +1,39 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-
+import Geocoder from "react-native-geocoding";
 import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 export default class BaseLocation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      city: props.route.params.city,
+      address: props.route.params.address,
+      lng: props.route.params.lng,
+      lat: props.route.params.lat,
+    };
+  }
+  getData() {
+    Geocoder.init("AIzaSyC44wefq1iYNoxafArYW2-dd-uyAnNOTZU");
+    Geocoder.from(this.state.lat, this.state.lng)
+      .then((json) => {
+        var addressComponent = json.results[0].formatted_address;
+        alert(addressComponent);
+        var cityComponent = json.result[0].address_components[2];
+        this.setState({ address: addressComponent });
+        this.setState({ city: cityComponent });
+      })
+      .catch((error) => console.warn(error));
+
+    // Works as well :
+    // ------------
+
+    // location object
+  }
   render() {
+    if (this.state.city == "") {
+      this.getData();
+    }
     return (
       <View style={styles.container}>
         <View style={{ flexDirection: "row" }}>
@@ -48,7 +77,7 @@ export default class BaseLocation extends React.Component {
               marginTop: 8,
             }}
           >
-            DLF Mall of India, Sector 18, Noida, Uttar Pradesh 201301, India
+            {this.state.address}
           </Text>
         </View>
         <Text style={styles.addressText}>CITY</Text>
@@ -70,7 +99,7 @@ export default class BaseLocation extends React.Component {
               marginTop: 8,
             }}
           >
-            New Delhi
+            {this.state.city}
           </Text>
         </View>
       </View>
