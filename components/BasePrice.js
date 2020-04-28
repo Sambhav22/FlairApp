@@ -6,9 +6,17 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 export default class BaseLocation extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       eventPrice: props.route.params.eventPrice,
+      userId: props.route.params.userId,
+      token: props.route.params.token,
     };
+  }
+
+  UpdateState() {
+    this.setState({ eventPrice: this.props.route.params.eventPrice });
+    alert("Price updated successfully.");
   }
 
   render() {
@@ -17,7 +25,12 @@ export default class BaseLocation extends React.Component {
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate("Account");
+              const UpdateStateAccount = this.props.route.params
+                .UpdateStateAccount;
+              UpdateStateAccount();
+              this.props.navigation.navigate("Account", {
+                eventPrice: this.state.eventPrice,
+              });
             }}
           >
             <Ionicons
@@ -54,113 +67,16 @@ export default class BaseLocation extends React.Component {
                 price: this.state.eventPrice[0].price,
                 name: this.state.eventPrice[0].eventTypeId.name,
                 description: this.state.eventPrice[0].eventTypeId.description,
+                userId: this.state.userId,
+                eventId: this.state.eventPrice[0].eventTypeId._id,
+                token: this.state.token,
+                UpdateState: this.UpdateState.bind(this),
+                eventPrice: this.state.eventPrice,
               });
             }}
           >
             <Text style={styles.editText}>
               {this.state.eventPrice[0].price}
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.addressText}>
-            {this.state.eventPrice[1].eventTypeId.name}
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text
-            style={{
-              width: 350,
-              fontSize: 16,
-              color: "#FFFF",
-              fontFamily: "Semibold",
-              paddingLeft: 21,
-              paddingRight: 15,
-              marginTop: 9,
-            }}
-          >
-            {this.state.eventPrice[1].eventTypeId.description}
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate("BasePriceUpdate", {
-                price: this.state.eventPrice[1].price,
-                name: this.state.eventPrice[1].eventTypeId.name,
-                description: this.state.eventPrice[1].eventTypeId.description,
-              });
-            }}
-          >
-            <Text style={styles.editText}>
-              {this.state.eventPrice[1].price}
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.addressText}>
-            {this.state.eventPrice[2].eventTypeId.name}
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text
-            style={{
-              width: 350,
-              fontSize: 16,
-              color: "#FFFF",
-              fontFamily: "Semibold",
-              paddingLeft: 21,
-              paddingRight: 15,
-              marginTop: 9,
-            }}
-          >
-            {this.state.eventPrice[2].eventTypeId.description}
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate("BasePriceUpdate", {
-                price: this.state.eventPrice[2].price,
-                name: this.state.eventPrice[2].eventTypeId.name,
-                description: this.state.eventPrice[2].eventTypeId.description,
-              });
-            }}
-          >
-            <Text style={styles.editText}>
-              {this.state.eventPrice[2].price}
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.addressText}>
-            {this.state.eventPrice[3].eventTypeId.name}
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text
-            style={{
-              width: 350,
-              fontSize: 16,
-              color: "#FFFF",
-              fontFamily: "Semibold",
-              paddingLeft: 21,
-              paddingRight: 15,
-              marginTop: 9,
-            }}
-          >
-            {this.state.eventPrice[3].eventTypeId.description}
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate("BasePriceUpdate", {
-                price: this.state.eventPrice[3].price,
-                name: this.state.eventPrice[3].eventTypeId.name,
-                description: this.state.eventPrice[3].eventTypeId.description,
-              });
-            }}
-          >
-            <Text style={styles.editText}>
-              {this.state.eventPrice[3].price}
             </Text>
           </TouchableOpacity>
         </View>

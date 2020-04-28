@@ -97,6 +97,7 @@ export default class Login extends React.Component {
                     .then((response) => response.json())
                     .then((res) => {
                       if (res.type == "success") {
+                        var userId = res.data.userId;
                         var city = res.data.city;
                         var address = res.data.address;
                         var lng = res.data.coordinates.lng;
@@ -105,13 +106,18 @@ export default class Login extends React.Component {
                         this.props.navigation.navigate("AccountStackScreen", {
                           screen: "Account",
                           params: {
-                            user: fullname,
-                            image: image,
-                            city,
-                            address,
-                            lng,
-                            lat,
-                            eventPrice,
+                            screen: "Account",
+                            params: {
+                              user: fullname,
+                              image: image,
+                              city,
+                              address,
+                              lng,
+                              lat,
+                              eventPrice,
+                              userId,
+                              token,
+                            },
                           },
                         });
                       }

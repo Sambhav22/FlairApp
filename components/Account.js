@@ -13,8 +13,30 @@ export default class Account extends React.Component {
       lng: props.route.params.lng,
       lat: props.route.params.lat,
       eventPrice: props.route.params.eventPrice,
+      userId: props.route.params.userId,
+      token: props.route.params.token,
     };
+    this.props.navigation.addListener("didFocus", (payload) => {
+      this.setState({ is_updated: true });
+    });
   }
+  UpdateStateAccount() {
+    fetch("http://api-staging.sleeping8.com/bookingdetail/get_info/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: this.state.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.type == "success") {
+          this.setState({ eventPrice: res.data.eventPrice });
+        }
+      })
+      .done();
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -22,7 +44,10 @@ export default class Account extends React.Component {
         <View style={styles.imgContainer}>
           <Image
             style={styles.image}
-            source={require("../assets/martin.png")}
+            source={{
+              uri: this.state.image,
+            }}
+            placeholderSource={require("../assets/Placeholder-256.png")}
           />
           <Text style={styles.nameText}>{this.state.user}</Text>
         </View>
@@ -61,6 +86,9 @@ export default class Account extends React.Component {
             onPress={() => {
               this.props.navigation.navigate("BasePrice", {
                 eventPrice: this.state.eventPrice,
+                userId: this.state.userId,
+                token: this.state.token,
+                UpdateStateAccount: this.UpdateStateAccount.bind(this),
               });
             }}
             style={{ marginTop: 5, flexDirection: "row" }}
@@ -130,6 +158,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 16,
     borderRadius: 60,
+    height: 100,
+    width: 100,
   },
   nameText: {
     marginTop: 65,

@@ -18,10 +18,9 @@ export default class BaseLocation extends React.Component {
     Geocoder.from(this.state.lat, this.state.lng)
       .then((json) => {
         var addressComponent = json.results[0].formatted_address;
-        alert(addressComponent);
-        var cityComponent = json.result[0].address_components[2];
+        var cityComponent = json.results[0].address_components[2];
         this.setState({ address: addressComponent });
-        this.setState({ city: cityComponent });
+        this.setState({ city: cityComponent.short_name });
       })
       .catch((error) => console.warn(error));
 
@@ -30,10 +29,13 @@ export default class BaseLocation extends React.Component {
 
     // location object
   }
-  render() {
+
+  componentDidMount() {
     if (this.state.city == "") {
       this.getData();
     }
+  }
+  render() {
     return (
       <View style={styles.container}>
         <View style={{ flexDirection: "row" }}>

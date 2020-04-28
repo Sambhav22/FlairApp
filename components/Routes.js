@@ -61,7 +61,7 @@ const AccountTabScreen = ({ navigation, routes }) => {
 const AccountStackScreen = ({ navigation, routes }) => {
   return (
     <AccountStack.Navigator screenOptions={{ headerShown: false }}>
-      <AccountStack.Screen name="Account" component={Account} />
+      <AccountStack.Screen name="Account" component={AccountTabScreen} />
       <AccountStack.Screen name="BaseLocation" component={BaseLocation} />
       <AccountStack.Screen name="BasePrice" component={BasePrice} />
       <AccountStack.Screen name="BasePriceUpdate" component={BasePriceUpdate} />
