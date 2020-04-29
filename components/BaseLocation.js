@@ -7,11 +7,28 @@ export default class BaseLocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: props.route.params.userId,
       city: props.route.params.city,
       address: props.route.params.address,
       lng: props.route.params.lng,
       lat: props.route.params.lat,
+      token: props.route.params.token,
     };
+  }
+  UpdateCity() {
+    fetch("http://api-staging.sleeping8.com/bookingdetail/get_info/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: this.state.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.type == "success") {
+          this.setState({ city: res.data.city, address: res.data.address });
+        }
+      });
   }
   getData() {
     Geocoder.init("AIzaSyC44wefq1iYNoxafArYW2-dd-uyAnNOTZU");
@@ -41,6 +58,9 @@ export default class BaseLocation extends React.Component {
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             onPress={() => {
+              const UpdateStateCity = this.props.route.params.UpdateStateCity;
+              UpdateStateCity();
+
               this.props.navigation.navigate("Account");
             }}
           >
@@ -56,7 +76,13 @@ export default class BaseLocation extends React.Component {
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.addressText}>ADDRESS</Text>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("EditBaseLocation")}
+            onPress={() =>
+              this.props.navigation.navigate("EditBaseLocation", {
+                userId: this.state.userId,
+                token: this.state.token,
+                UpdateCity: this.UpdateCity.bind(this),
+              })
+            }
           >
             <Text style={styles.editText}>Edit</Text>
           </TouchableOpacity>

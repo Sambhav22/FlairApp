@@ -20,6 +20,21 @@ export default class Account extends React.Component {
       this.setState({ is_updated: true });
     });
   }
+  UpdateStateCity() {
+    fetch("http://api-staging.sleeping8.com/bookingdetail/get_info/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: this.state.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.type == "success") {
+          this.setState({ city: res.data.city, address: res.data.address });
+        }
+      });
+  }
   UpdateStateAccount() {
     fetch("http://api-staging.sleeping8.com/bookingdetail/get_info/me", {
       method: "GET",
@@ -69,6 +84,9 @@ export default class Account extends React.Component {
                 address: this.state.address,
                 lat: this.state.lat,
                 lng: this.state.lng,
+                userId: this.state.userId,
+                token: this.state.token,
+                UpdateStateCity: this.UpdateStateCity.bind(this),
               });
             }}
             style={{ marginTop: 5, flexDirection: "row" }}
