@@ -17,7 +17,9 @@ import BasePriceUpdate from "./BasePriceUpdate";
 import EditBaseLocation from "./EditBaseLocation";
 import BaseLocation from "./BaseLocation";
 import BasePrice from "./BasePrice";
-
+import ArtistProfile from "./ArtistProfile";
+import Biography from "./Biography";
+import Genre from "./Genre";
 const LoginStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const AccountStack = createStackNavigator();
@@ -69,6 +71,9 @@ const AccountStackScreen = ({ navigation, routes }) => {
         name="EditBaseLocation"
         component={EditBaseLocation}
       />
+      <AccountStack.Screen name="ArtistProfile" component={ArtistProfile} />
+      <AccountStack.Screen name="Biography" component={Biography} />
+      <AccountStack.Screen name="Genre" component={Genre} />
     </AccountStack.Navigator>
   );
 };

@@ -120,7 +120,12 @@ export default class Account extends React.Component {
               size={15}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={{ marginTop: 14, flexDirection: "row" }}>
+          <TouchableOpacity
+            style={{ marginTop: 14, flexDirection: "row" }}
+            onPress={() => {
+              this.props.navigation.navigate("ArtistProfile");
+            }}
+          >
             <Ionicons name="md-person" color="red" size={30} />
             <Text style={styles.accountText}>Account</Text>
             <Ionicons
