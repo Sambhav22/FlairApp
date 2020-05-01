@@ -4,7 +4,7 @@ export default class Upcoming extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={{ color: "white" }}>Upcoming</Text>
+        <Text style={{ color: "white" }}>No Bookings yet</Text>
       </View>
     );
   }

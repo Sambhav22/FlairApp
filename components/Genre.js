@@ -9,6 +9,7 @@ export default class Genre extends React.Component {
     this.maxLength = 100;
     this.state = {
       textLength: 0,
+      subCategoryIds: props.route.params.subCategoryIds,
     };
   }
   onChangeText(text) {
@@ -37,19 +38,19 @@ export default class Genre extends React.Component {
         </View>
         <Text style={styles.bollywood}>Bollywood</Text>
         <View style={{ backgroundColor: "#FDB900", padding: 6, marginTop: 10 }}>
-          <Text style={styles.House}>House</Text>
+          <Text style={styles.House}>{this.state.subCategoryIds[0].name}</Text>
         </View>
         <Text style={styles.Trance}>Trance</Text>
         <Text style={styles.Dubstep}>Dubstep</Text>
 
         <View style={{ backgroundColor: "#FDB900", padding: 6, marginTop: 13 }}>
-          <Text style={styles.House}>Techno</Text>
+          <Text style={styles.House}>{this.state.subCategoryIds[1].name}</Text>
         </View>
         <Text style={styles.Trance}>Drum and Bass</Text>
         <Text style={styles.Dubstep}>Trap</Text>
         <Text style={styles.Dubstep}>Future Bass</Text>
         <View style={{ backgroundColor: "#FDB900", padding: 6, marginTop: 13 }}>
-          <Text style={styles.House}>Hip-Hop</Text>
+          <Text style={styles.House}>{this.state.subCategoryIds[2].name}</Text>
         </View>
         <Text style={styles.Trance}>Deep House</Text>
         <Text style={styles.Dubstep}>Tech House</Text>

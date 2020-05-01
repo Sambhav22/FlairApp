@@ -1,12 +1,73 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+
+import Routes from "./Routes";
+
 export default class Artist extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      user: props.route.params.user,
+      email: props.route.params.email,
+      mobile: props.route.params.mobile,
+      token: props.route.params.token,
+      stageName: "",
+      category: "",
+      artistInfo: "",
+      subCategoryIds: [],
+      userId: props.route.params.userId,
+      cabDetails: props.route.params.cabDetails,
+    };
+  }
+  UpdateState() {
+    fetch("http://api-staging.sleeping8.com/professionaldetail/get_info/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: this.state.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.type == "success") {
+          this.setState({
+            stageName: res.data.stageName,
+            category: res.data.categoryId.name,
+            artistInfo: res.data.artistInfo,
+            subCategoryIds: res.data.subCategoryIds,
+          });
+        } else {
+          alert("Something went wrong");
+        }
+      })
+      .done();
+  }
+
+  componentDidMount() {
+    fetch("http://api-staging.sleeping8.com/professionaldetail/get_info/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: this.state.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.type == "success") {
+          this.setState({
+            stageName: res.data.stageName,
+            category: res.data.categoryId.name,
+            artistInfo: res.data.artistInfo,
+            subCategoryIds: res.data.subCategoryIds,
+          });
+        } else {
+          alert("Something went wrong");
+        }
+      })
+      .done();
   }
 
   render() {
@@ -24,19 +85,50 @@ export default class Artist extends React.Component {
             size={35}
           />
         </TouchableOpacity>
-        <Text style={styles.name}>Martin Garrix</Text>
+        <Text style={styles.name}>{this.state.user}</Text>
         <Text style={styles.pdetails}>Personal Details</Text>
+
         <Text style={styles.emailText}>EMAIL ADDRESS</Text>
-        <Text style={styles.emailValue}>artist25@gmail.com</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            style={{ marginLeft: 22, height: 32, width: 32 }}
+            source={require("../assets/Icons_Images/tab_account/artist_profile_1/Email.png")}
+          />
+
+          <Text style={styles.emailValue}>{this.state.email}</Text>
+        </View>
+
         <Text style={styles.emailText}>Mobile Number</Text>
-        <Text style={styles.emailValue}>+91 - 9977686587</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            style={{ marginLeft: 22, height: 32, width: 32 }}
+            source={require("../assets/Icons_Images/tab_account/artist_profile_1/Mobile.png")}
+          />
+
+          <Text style={styles.emailValue}>+91 - {this.state.mobile}</Text>
+        </View>
+
         <Text style={styles.emailText}>PASSWORD</Text>
-        <TouchableOpacity>
-          <Text style={styles.emailValue}>********</Text>
-        </TouchableOpacity>
+
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            style={{ marginLeft: 22, height: 32, width: 32 }}
+            source={require("../assets/Icons_Images/tab_account/artist_profile_1/Password.png")}
+          />
+
+          <TouchableOpacity style={{ flexDirection: "row" }}>
+            <Text style={styles.emailValue}>********</Text>
+            <Ionicons
+              style={{ marginTop: 2, marginLeft: 247 }}
+              name="ios-arrow-forward"
+              color="#FFFF"
+              size={15}
+            />
+          </TouchableOpacity>
+        </View>
         <View
           style={{
-            marginTop: 8,
+            marginTop: 12,
             marginHorizontal: 20,
             marginBottom: 5,
             borderBottomColor: "#707070",
@@ -45,21 +137,46 @@ export default class Artist extends React.Component {
         />
         <Text style={styles.pdetails}>Professional Details</Text>
         <Text style={styles.stageText}>STAGE NAME</Text>
-        <Text style={styles.stageValue}>Martin Garrix</Text>
+        <Text style={styles.stageValue}>{this.state.stageName}</Text>
         <Text style={styles.stageText}>CATEGORY</Text>
-        <Text style={styles.stageValue}>EDM Artist</Text>
+        <Text style={styles.stageValue}>{this.state.category}</Text>
         <Text style={styles.stageText}>GENRE(S)</Text>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("Genre")}
+          style={{ flexDirection: "row" }}
+          onPress={() =>
+            this.props.navigation.navigate("Genre", {
+              subCategoryIds: this.state.subCategoryIds,
+            })
+          }
         >
           <Text style={styles.stageValue}>Click to view</Text>
+          <Ionicons
+            style={{ marginTop: 8, marginLeft: 266 }}
+            name="ios-arrow-forward"
+            color="#FFFF"
+            size={15}
+          />
         </TouchableOpacity>
 
         <Text style={styles.stageText}>BIOGRAPHY</Text>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("Biography")}
+          style={{ flexDirection: "row" }}
+          onPress={() =>
+            this.props.navigation.navigate("Biography", {
+              artistInfo: this.state.artistInfo,
+              token: this.state.token,
+              userId: this.state.userId,
+              UpdateState: this.UpdateState.bind(this),
+            })
+          }
         >
           <Text style={styles.stageValue}>Click to view</Text>
+          <Ionicons
+            style={{ marginTop: 8, marginLeft: 266 }}
+            name="ios-arrow-forward"
+            color="#FFFF"
+            size={15}
+          />
         </TouchableOpacity>
 
         <View
@@ -71,9 +188,17 @@ export default class Artist extends React.Component {
             marginBottom: 5,
           }}
         />
+
         <Text style={styles.pdetails}>Booking Details</Text>
         <Text style={styles.stageText}>NUMBER OF CABS</Text>
-        <Text style={styles.stageValue}>Sedan(1), Luxury(2), Hatchback(1)</Text>
+
+        <View style={{ flexDirection: "row" }}>
+          {this.state.cabDetails.map((value) => (
+            <Text key={value._id} style={styles.stageValue}>
+              {value.cabTypeId.name + "(" + value.units + ")"}
+            </Text>
+          ))}
+        </View>
       </View>
     );
   }
@@ -106,7 +231,7 @@ const styles = StyleSheet.create({
   emailValue: {
     fontSize: 16,
     fontFamily: "Semibold",
-    marginLeft: 70,
+    marginLeft: 20,
     marginTop: 5,
     color: "#FFFFFF",
   },

@@ -82,6 +82,8 @@ export default class Login extends React.Component {
               .then((res) => {
                 if (res.type == "success") {
                   var fullname = res.data.fullName;
+                  var email = res.data.email;
+                  var mobile = res.data.mobile;
                   var image = res.data.profilePic.imagePaths.path;
 
                   fetch(
@@ -103,6 +105,7 @@ export default class Login extends React.Component {
                         var lng = res.data.coordinates.lng;
                         var lat = res.data.coordinates.lat;
                         var eventPrice = res.data.eventPrice;
+                        var cabDetails = res.data.cabsPreferences;
                         this.props.navigation.navigate("AccountStackScreen", {
                           screen: "Account",
                           params: {
@@ -117,6 +120,9 @@ export default class Login extends React.Component {
                               eventPrice,
                               userId,
                               token,
+                              mobile,
+                              email,
+                              cabDetails,
                             },
                           },
                         });
@@ -201,7 +207,8 @@ export default class Login extends React.Component {
                 <TouchableOpacity onPress={this.myfun}>
                   <LinearGradient
                     colors={["#FDB900", "#B16D00"]}
-                    start={[0, 0.5]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
                     style={styles.buttonContainer}
                   >
                     <Text style={styles.buttonText}> Login</Text>

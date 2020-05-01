@@ -96,7 +96,8 @@ export default class BaseLocation extends React.Component {
           <TouchableOpacity onPress={this.myFun}>
             <LinearGradient
               colors={["#FDB900", "#B16D00"]}
-              start={[0, 0.5]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
               style={styles.buttonContainer}
             >
               <Text style={styles.buttonText}> Update</Text>

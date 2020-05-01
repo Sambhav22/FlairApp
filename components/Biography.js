@@ -9,14 +9,52 @@ export default class BaseLocation extends React.Component {
     this.maxLength = 100;
     this.state = {
       textLength: 0,
+      text: props.route.params.artistInfo,
+      token: props.route.params.token,
+      userId: props.route.params.userId,
     };
+  }
+
+  componentDidMount() {
+    var x = this.state.text.length;
+    this.setState({ textLength: x });
   }
   onChangeText(text) {
     this.setState({
+      text: text,
       textLength: text.length,
     });
   }
-
+  myFun = () => {
+    fetch("http://api-staging.sleeping8.com/professionaldetail/update", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: this.state.token,
+      },
+      body: JSON.stringify({
+        userId: this.state.userId,
+        artistInfo: this.state.text,
+      }),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.type == "success") {
+          const UpdateState = this.props.route.params.UpdateState;
+          this.setState({
+            text: res.data.artistInfo,
+          });
+          alert("Biography Updated Successfully");
+          this.props.navigation.navigate("ArtistProfile", {
+            artistInfo: this.state.text,
+          });
+          UpdateState();
+        } else {
+          alert("Something went wrong");
+        }
+      })
+      .done();
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -51,7 +89,6 @@ export default class BaseLocation extends React.Component {
             }}
             multiline={true}
             numberOfLines={4}
-            onChangeText={(text) => this.setState({ text })}
             value={this.state.text}
             maxLength={1000}
             onChangeText={this.onChangeText.bind(this)}
@@ -71,7 +108,8 @@ export default class BaseLocation extends React.Component {
           <TouchableOpacity onPress={this.myFun}>
             <LinearGradient
               colors={["#FDB900", "#B16D00"]}
-              start={[0, 0.5]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
               style={styles.buttonContainer}
             >
               <Text style={styles.buttonText}> Update</Text>

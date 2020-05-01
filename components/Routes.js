@@ -1,7 +1,7 @@
 // You can import Ionicons from @expo/vector-icons if you use Expo or
 // react-native-vector-icons/Ionicons otherwise.
 import * as React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -31,15 +31,40 @@ const AccountTabScreen = ({ navigation, routes }) => {
           let iconName;
 
           if (route.name === "Upcoming") {
-            iconName = "ios-list";
+            const image = focused
+              ? require("../assets/Icons_Images/tab_upcoming/Tab_item_Upcoming.png")
+              : require("../assets/Icons_Images/tab_upcoming/Tabitem_Upcoming.png");
+            return (
+              <Image
+                style={{ marginTop: 6, height: 24, width: 24 }}
+                source={image}
+              />
+            );
           } else if (route.name === "Calendar") {
-            iconName = "ios-calendar";
+            const image = focused
+              ? require("../assets/Icons_Images/tab_calendar/Tab_Item_Calendar.png")
+              : require("../assets/Icons_Images/tab_calendar/TabItem_Calendar.png");
+
+            return (
+              <Image
+                style={{ marginTop: 6, height: 24, width: 24 }}
+                source={image}
+              />
+            );
           } else if (route.name === "Account") {
-            iconName = "ios-person";
+            const image = focused
+              ? require("../assets/Icons_Images/tab_account/Tab_Item.png")
+              : require("../assets/Icons_Images/tab_account/TabItem_Account.png");
+
+            return (
+              <Image
+                style={{ marginTop: 6, height: 24, width: 24 }}
+                source={image}
+              />
+            );
           }
 
           // You can return any component that you like here!
-          return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
       tabBarOptions={{

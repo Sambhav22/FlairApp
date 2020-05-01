@@ -1,7 +1,7 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import Geocoder from "react-native-geocoding";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 export default class BaseLocation extends React.Component {
   constructor(props) {
@@ -88,11 +88,9 @@ export default class BaseLocation extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Ionicons
-            style={{ marginTop: 10, paddingLeft: 25 }}
-            name="ios-business"
-            color="#ffff"
-            size={30}
+          <Image
+            style={{ marginTop: 8, marginLeft: 12, height: 32, width: 32 }}
+            source={require("../assets/Icons_Images/tab_account/base_location_1/Address.png")}
           />
           <Text
             style={{
@@ -110,11 +108,9 @@ export default class BaseLocation extends React.Component {
         </View>
         <Text style={styles.addressText}>CITY</Text>
         <View style={{ flexDirection: "row" }}>
-          <Ionicons
-            style={{ marginTop: 3, paddingLeft: 25 }}
-            name="ios-business"
-            color="#ffff"
-            size={30}
+          <Image
+            style={{ marginTop: 3, marginLeft: 15, height: 32, width: 32 }}
+            source={require("../assets/Icons_Images/tab_account/base_location_1/City.png")}
           />
           <Text
             style={{
@@ -122,7 +118,7 @@ export default class BaseLocation extends React.Component {
               fontSize: 16,
               color: "#FFFF",
               fontFamily: "Semibold",
-              paddingLeft: 18,
+              paddingLeft: 14,
               paddingRight: 15,
               marginTop: 8,
             }}

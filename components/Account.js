@@ -15,6 +15,9 @@ export default class Account extends React.Component {
       eventPrice: props.route.params.eventPrice,
       userId: props.route.params.userId,
       token: props.route.params.token,
+      email: props.route.params.email,
+      mobile: props.route.params.mobile,
+      cabDetails: props.route.params.cabDetails,
     };
     this.props.navigation.addListener("didFocus", (payload) => {
       this.setState({ is_updated: true });
@@ -67,84 +70,122 @@ export default class Account extends React.Component {
           <Text style={styles.nameText}>{this.state.user}</Text>
         </View>
         <View style={styles.notContainer}>
-          <TouchableOpacity style={{ flexDirection: "row" }}>
-            <Ionicons name="ios-notifications" color="blue" size={40} />
-            <Text style={styles.notText}>Notifications</Text>
-            <Ionicons
-              style={styles.arrow}
-              name="ios-arrow-forward"
-              color="#FFFF"
-              size={15}
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              style={{ marginTop: 5, height: 32, width: 32 }}
+              source={require("../assets/Icons_Images/tab_account/Notification-64.png")}
             />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate("BaseLocation", {
-                city: this.state.city,
-                address: this.state.address,
-                lat: this.state.lat,
-                lng: this.state.lng,
-                userId: this.state.userId,
-                token: this.state.token,
-                UpdateStateCity: this.UpdateStateCity.bind(this),
-              });
-            }}
-            style={{ marginTop: 5, flexDirection: "row" }}
-          >
-            <Ionicons name="ios-notifications" color="green" size={40} />
-            <Text style={styles.notText}>Base Location</Text>
-            <Ionicons
-              style={styles.arrow1}
-              name="ios-arrow-forward"
-              color="#FFFF"
-              size={15}
+
+            <TouchableOpacity style={{ flexDirection: "row" }}>
+              <Text style={styles.notText}>Notifications</Text>
+
+              <Ionicons
+                style={styles.arrow}
+                name="ios-arrow-forward"
+                color="#FFFF"
+                size={15}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              style={{ marginTop: 10, height: 32, width: 32 }}
+              source={require("../assets/Icons_Images/tab_account/Location-64.png")}
             />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate("BasePrice", {
-                eventPrice: this.state.eventPrice,
-                userId: this.state.userId,
-                token: this.state.token,
-                UpdateStateAccount: this.UpdateStateAccount.bind(this),
-              });
-            }}
-            style={{ marginTop: 5, flexDirection: "row" }}
-          >
-            <Ionicons name="ios-pricetag" color="yellow" size={30} />
-            <Text style={styles.baseText}>Base Price</Text>
-            <Ionicons
-              style={styles.arrow2}
-              name="ios-arrow-forward"
-              color="#FFFF"
-              size={15}
+
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("BaseLocation", {
+                  city: this.state.city,
+                  address: this.state.address,
+                  lat: this.state.lat,
+                  lng: this.state.lng,
+                  userId: this.state.userId,
+                  token: this.state.token,
+                  UpdateStateCity: this.UpdateStateCity.bind(this),
+                });
+              }}
+              style={{ marginTop: 8, flexDirection: "row" }}
+            >
+              <Text style={styles.notText}>Base Location</Text>
+              <Ionicons
+                style={styles.arrow1}
+                name="ios-arrow-forward"
+                color="#FFFF"
+                size={15}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              style={{ marginTop: 10, height: 32, width: 32 }}
+              source={require("../assets/Icons_Images/tab_account/Price-64.png")}
             />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ marginTop: 14, flexDirection: "row" }}
-            onPress={() => {
-              this.props.navigation.navigate("ArtistProfile");
-            }}
-          >
-            <Ionicons name="md-person" color="red" size={30} />
-            <Text style={styles.accountText}>Account</Text>
-            <Ionicons
-              style={styles.arrow3}
-              name="ios-arrow-forward"
-              color="#FFFF"
-              size={15}
+
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("BasePrice", {
+                  eventPrice: this.state.eventPrice,
+                  userId: this.state.userId,
+                  token: this.state.token,
+                  UpdateStateAccount: this.UpdateStateAccount.bind(this),
+                });
+              }}
+              style={{ marginTop: 10, flexDirection: "row" }}
+            >
+              <Text style={styles.baseText}>Base Price</Text>
+              <Ionicons
+                style={styles.arrow2}
+                name="ios-arrow-forward"
+                color="#FFFF"
+                size={15}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              style={{ marginTop: 10, height: 32, width: 32 }}
+              source={require("../assets/Icons_Images/tab_account/Account-64.png")}
             />
-          </TouchableOpacity>
-          <TouchableOpacity style={{ marginTop: 14, flexDirection: "row" }}>
-            <Ionicons name="md-person" color="#56FFFF" size={30} />
-            <Text style={styles.accountText}>Support</Text>
-            <Ionicons
-              style={styles.arrow3}
-              name="ios-arrow-forward"
-              color="#FFFF"
-              size={15}
+
+            <TouchableOpacity
+              style={{ marginTop: 10, flexDirection: "row" }}
+              onPress={() => {
+                this.props.navigation.navigate("ArtistProfile", {
+                  user: this.state.user,
+                  mobile: this.state.mobile,
+                  email: this.state.email,
+                  token: this.state.token,
+                  userId: this.state.userId,
+                  cabDetails: this.state.cabDetails,
+                });
+              }}
+            >
+              <Text style={styles.accountText}>Account</Text>
+              <Ionicons
+                style={styles.arrow3}
+                name="ios-arrow-forward"
+                color="#FFFF"
+                size={15}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              style={{ marginTop: 10, height: 32, width: 32 }}
+              source={require("../assets/Icons_Images/tab_account/Support-64.png")}
             />
-          </TouchableOpacity>
+
+            <TouchableOpacity style={{ marginTop: 10, flexDirection: "row" }}>
+              <Text style={styles.accountText}>Support</Text>
+              <Ionicons
+                style={styles.arrow3}
+                name="ios-arrow-forward"
+                color="#FFFF"
+                size={15}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}
@@ -200,21 +241,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "regular",
     marginTop: 10,
-    marginLeft: 20,
+    marginLeft: 18,
   },
   baseText: {
     color: "#FFFFFF",
     fontSize: 16,
     fontFamily: "regular",
     marginTop: 10,
-    marginLeft: 21,
+    marginLeft: 19,
   },
   accountText: {
     color: "#FFFFFF",
     fontSize: 16,
     fontFamily: "regular",
     marginTop: 10,
-    marginLeft: 24,
+    marginLeft: 19,
   },
 
   arrow: {

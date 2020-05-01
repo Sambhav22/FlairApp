@@ -42,44 +42,42 @@ export default class BaseLocation extends React.Component {
           </TouchableOpacity>
           <Text style={styles.price}>Base Price</Text>
         </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.addressText}>
-            {this.state.eventPrice[0].eventTypeId.name}
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text
-            style={{
-              width: 350,
-              fontSize: 16,
-              color: "#FFFF",
-              fontFamily: "Semibold",
-              paddingLeft: 21,
-              paddingRight: 15,
-              marginTop: 9,
-            }}
-          >
-            {this.state.eventPrice[0].eventTypeId.description}
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate("BasePriceUpdate", {
-                price: this.state.eventPrice[0].price,
-                name: this.state.eventPrice[0].eventTypeId.name,
-                description: this.state.eventPrice[0].eventTypeId.description,
-                userId: this.state.userId,
-                eventId: this.state.eventPrice[0].eventTypeId._id,
-                token: this.state.token,
-                UpdateState: this.UpdateState.bind(this),
-                eventPrice: this.state.eventPrice,
-              });
-            }}
-          >
-            <Text style={styles.editText}>
-              {this.state.eventPrice[0].price}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        {this.state.eventPrice.map((value) => (
+          <View key={value._id}>
+            <Text style={styles.addressText}>{value.eventTypeId.name}</Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  width: 350,
+                  fontSize: 16,
+                  color: "#FFFF",
+                  fontFamily: "Semibold",
+                  paddingLeft: 21,
+                  paddingRight: 15,
+                  marginTop: 9,
+                }}
+              >
+                {value.eventTypeId.description}
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate("BasePriceUpdate", {
+                    price: value.price,
+                    name: value.eventTypeId.name,
+                    description: value.eventTypeId.description,
+                    userId: this.state.userId,
+                    eventId: value.eventTypeId._id,
+                    token: this.state.token,
+                    UpdateState: this.UpdateState.bind(this),
+                    eventPrice: value,
+                  });
+                }}
+              >
+                <Text style={styles.editText}>{value.price}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ))}
       </View>
     );
   }
