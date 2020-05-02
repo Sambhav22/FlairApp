@@ -13,18 +13,6 @@ export default class Calendar1 extends React.Component {
     return (
       <View style={styles.container}>
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate("BasePrice");
-            }}
-          >
-            <Ionicons
-              style={{ marginTop: 27, paddingLeft: 25 }}
-              name="ios-arrow-back"
-              color="white"
-              size={35}
-            />
-          </TouchableOpacity>
           <Text style={styles.price}>Calendar</Text>
         </View>
         <Calendar

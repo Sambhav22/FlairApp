@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, AsyncStorage } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 export default class Account extends React.Component {
@@ -192,6 +192,7 @@ export default class Account extends React.Component {
         >
           <TouchableOpacity
             onPress={() => {
+              AsyncStorage.clear();
               this.props.navigation.navigate("Login");
             }}
           >
