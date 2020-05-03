@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, AsyncStorage } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  AsyncStorage,
+  BackHandler,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 export default class Account extends React.Component {
@@ -23,6 +30,13 @@ export default class Account extends React.Component {
       this.setState({ is_updated: true });
     });
   }
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", function () {
+      return true;
+    });
+  }
+
   UpdateStateCity() {
     fetch("http://api-staging.sleeping8.com/bookingdetail/get_info/me", {
       method: "GET",

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Flair",
-    "slug": "appVer4",
+    "slug": "appVer7",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],

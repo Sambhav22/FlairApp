@@ -27,76 +27,6 @@ export default class Login extends React.Component {
     };
   }
 
-  componentDidMount() {
-    AsyncStorage.getItem("token", (err, result) => {
-      if (result != null) {
-        this.setState({ indicator: true });
-
-        var token = result;
-        fetch("http://api-staging.sleeping8.com/user/me", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: token,
-          },
-        })
-          .then((response) => response.json())
-          .then((res) => {
-            if (res.type == "success") {
-              var fullname = res.data.fullName;
-              var email = res.data.email;
-              var mobile = res.data.mobile;
-              var image = res.data.profilePic.imagePaths.path;
-
-              fetch(
-                "http://api-staging.sleeping8.com/bookingdetail/get_info/me",
-                {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json",
-                    authorization: token,
-                  },
-                }
-              )
-                .then((response) => response.json())
-                .then((res) => {
-                  if (res.type == "success") {
-                    var userId = res.data.userId;
-                    var city = res.data.city;
-                    var address = res.data.address;
-                    var lng = res.data.coordinates.lng;
-                    var lat = res.data.coordinates.lat;
-                    var eventPrice = res.data.eventPrice;
-                    var cabDetails = res.data.cabsPreferences;
-                    this.setState({ indicator: false });
-
-                    this.props.navigation.navigate("AccountStackScreen", {
-                      screen: "Account",
-                      params: {
-                        screen: "Account",
-                        params: {
-                          user: fullname,
-                          image: image,
-                          city,
-                          address,
-                          lng,
-                          lat,
-                          eventPrice,
-                          userId,
-                          token,
-                          mobile,
-                          email,
-                          cabDetails,
-                        },
-                      },
-                    });
-                  }
-                });
-            }
-          });
-      }
-    });
-  }
   onIconPress = () => {
     this.setState({
       secureTextEntry: !this.state.secureTextEntry,
@@ -179,6 +109,7 @@ export default class Login extends React.Component {
                         var lat = res.data.coordinates.lat;
                         var eventPrice = res.data.eventPrice;
                         var cabDetails = res.data.cabsPreferences;
+                        this.setState({ indicator: false });
 
                         this.props.navigation.navigate("AccountStackScreen", {
                           screen: "Account",
@@ -203,7 +134,6 @@ export default class Login extends React.Component {
                       }
                     });
                 }
-                this.setState({ indicator: false });
               });
 
             this.setState({ email: "", pass: "" });

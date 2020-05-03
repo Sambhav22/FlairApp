@@ -19,6 +19,7 @@ import BaseLocation from "./BaseLocation";
 import BasePrice from "./BasePrice";
 import ArtistProfile from "./ArtistProfile";
 import Biography from "./Biography";
+import Splash from "./Splash";
 import Genre from "./Genre";
 const LoginStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -107,6 +108,8 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <LoginStack.Navigator screenOptions={{ headerShown: false }}>
+        <AccountStack.Screen name="Splash" component={Splash} />
+
         <AccountStack.Screen name="Login" component={Login} />
         <AccountStack.Screen name="Reset" component={Reset} />
         <AccountStack.Screen name="Forgot" component={Forgot} />
