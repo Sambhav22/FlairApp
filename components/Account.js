@@ -91,8 +91,9 @@ export default class Account extends React.Component {
             />
 
             <TouchableOpacity style={{ flexDirection: "row" }}>
-              <Text style={styles.notText}>Notifications</Text>
-
+              <View style={{ width: 200 }}>
+                <Text style={styles.notText}>Notifications</Text>
+              </View>
               <Ionicons
                 style={styles.arrow}
                 name="ios-arrow-forward"
@@ -121,7 +122,9 @@ export default class Account extends React.Component {
               }}
               style={{ marginTop: 8, flexDirection: "row" }}
             >
-              <Text style={styles.notText}>Base Location</Text>
+              <View style={{ width: 200 }}>
+                <Text style={styles.notText}>Base Location</Text>
+              </View>
               <Ionicons
                 style={styles.arrow1}
                 name="ios-arrow-forward"
@@ -147,7 +150,9 @@ export default class Account extends React.Component {
               }}
               style={{ marginTop: 10, flexDirection: "row" }}
             >
-              <Text style={styles.baseText}>Base Price</Text>
+              <View style={{ width: 200 }}>
+                <Text style={styles.baseText}>Base Price</Text>
+              </View>
               <Ionicons
                 style={styles.arrow2}
                 name="ios-arrow-forward"
@@ -175,7 +180,9 @@ export default class Account extends React.Component {
                 });
               }}
             >
-              <Text style={styles.accountText}>Account</Text>
+              <View style={{ width: 200 }}>
+                <Text style={styles.accountText}>Account</Text>
+              </View>
               <Ionicons
                 style={styles.arrow3}
                 name="ios-arrow-forward"
@@ -191,7 +198,9 @@ export default class Account extends React.Component {
             />
 
             <TouchableOpacity style={{ marginTop: 10, flexDirection: "row" }}>
-              <Text style={styles.accountText}>Support</Text>
+              <View style={{ width: 200 }}>
+                <Text style={styles.accountText}>Support</Text>
+              </View>
               <Ionicons
                 style={styles.arrow3}
                 name="ios-arrow-forward"
@@ -275,19 +284,19 @@ const styles = StyleSheet.create({
 
   arrow: {
     marginTop: 14,
-    marginLeft: 243,
+    marginLeft: 150,
   },
   arrow1: {
     marginTop: 14,
-    marginLeft: 234,
+    marginLeft: 150,
   },
   arrow2: {
     marginTop: 14,
-    marginLeft: 258,
+    marginLeft: 150,
   },
   arrow3: {
     marginTop: 14,
-    marginLeft: 272,
+    marginLeft: 150,
   },
   logoutText: {
     fontSize: 20,

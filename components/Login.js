@@ -139,6 +139,8 @@ export default class Login extends React.Component {
             this.setState({ email: "", pass: "" });
           } else {
             alert("Either Email or Password Incorrect");
+            this.setState({ indicator: false });
+
             this.setState({ email: "", pass: "" });
           }
         })

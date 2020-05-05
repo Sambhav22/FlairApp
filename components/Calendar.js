@@ -12,11 +12,9 @@ export default class Calendar1 extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.price}>Calendar</Text>
-        </View>
+        <Text style={styles.price}>Calendar</Text>
         <Calendar
-          style={{ marginBottom: 100000 }}
+          style={{ marginBottom: 100000, marginLeft: -30 }}
           theme={{
             backgroundColor: "#ffffff",
             calendarBackground: "#242625",
@@ -43,7 +41,6 @@ export default class Calendar1 extends React.Component {
             textDayHeaderFontSize: 16,
           }}
           // Initially visible month. Default = Date()
-          current={"2012-03-01"}
           // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
           minDate={"2012-05-10"}
           // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
@@ -95,7 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#242625",
   },
   price: {
-    marginLeft: 120,
+    textAlign: "center",
     marginTop: 29,
     color: "#FDB900",
     fontSize: 20,

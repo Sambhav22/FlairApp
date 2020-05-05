@@ -18,6 +18,14 @@ export default class BaseLocation extends React.Component {
   }
   myFun = () => {
     const { userId, price, eventId, token } = this.state;
+    var info = this.props.route.params.info;
+    for (var i = 0; i < info.length; i++) {
+      if (info[i].id == eventId) {
+        info[i].price = price;
+        console.log(info[i].price);
+      }
+    }
+
     fetch("http://api-staging.sleeping8.com/bookingdetail/update", {
       method: "PUT",
       headers: {
@@ -26,7 +34,7 @@ export default class BaseLocation extends React.Component {
       },
       body: JSON.stringify({
         userId: userId,
-        eventPrice: [{ eventTypeId: eventId, price: price }],
+        eventPrice: info,
       }),
     })
       .then((response) => response.json())
@@ -34,11 +42,11 @@ export default class BaseLocation extends React.Component {
         if (res.type == "success") {
           const UpdateState = this.props.route.params.UpdateState;
 
-          var eventPrice = res.data.eventPrice;
-          this.props.navigation.navigate("BasePrice", {
-            eventPrice: eventPrice,
-          });
-          UpdateState();
+          //          var eventPrice = res.data.eventPrice;
+          //         this.props.navigation.navigate("BasePrice", {
+          //         eventPrice: eventPrice,
+          //        });
+          //      UpdateState();
         } else {
           alert(res.message);
         }

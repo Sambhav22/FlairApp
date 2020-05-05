@@ -20,6 +20,17 @@ export default class BaseLocation extends React.Component {
   }
 
   render() {
+    console.log(this.state.eventPrice);
+    var info = [];
+    for (var i = 0; i < this.state.eventPrice.length; i++) {
+      info = [
+        {
+          id: this.state.eventPrice[i].eventTypeId._id,
+          price: this.state.eventPrice[i].price,
+        },
+      ];
+    }
+
     return (
       <View style={styles.container}>
         <View style={{ flexDirection: "row" }}>
@@ -42,7 +53,7 @@ export default class BaseLocation extends React.Component {
           </TouchableOpacity>
           <Text style={styles.price}>Base Price</Text>
         </View>
-        {this.state.eventPrice.map((value) => (
+        {this.state.eventPrice.map((value, index) => (
           <View key={value._id}>
             <Text style={styles.addressText}>{value.eventTypeId.name}</Text>
             <View style={{ flexDirection: "row" }}>
@@ -70,6 +81,7 @@ export default class BaseLocation extends React.Component {
                     token: this.state.token,
                     UpdateState: this.UpdateState.bind(this),
                     eventPrice: value,
+                    info,
                   });
                 }}
               >
