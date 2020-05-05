@@ -21,6 +21,7 @@ import ArtistProfile from "./ArtistProfile";
 import Biography from "./Biography";
 import Splash from "./Splash";
 import Genre from "./Genre";
+import Support from "./Support";
 const LoginStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const AccountStack = createStackNavigator();
@@ -100,6 +101,7 @@ const AccountStackScreen = ({ navigation, routes }) => {
       <AccountStack.Screen name="ArtistProfile" component={ArtistProfile} />
       <AccountStack.Screen name="Biography" component={Biography} />
       <AccountStack.Screen name="Genre" component={Genre} />
+      <AccountStack.Screen name="Support" component={Support} />
     </AccountStack.Navigator>
   );
 };

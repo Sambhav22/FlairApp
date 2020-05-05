@@ -3,33 +3,33 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, Text, View, TextInput, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Assets } from "@react-navigation/stack";
 
 export default class Support extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text
-          style={{
-            marginTop: 30,
-            marginLeft: 20,
-            fontSize: 16,
-            color: "#FFFFFF",
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate("Account");
           }}
         >
-          Hello Bass Mafia
-        </Text>
-        <Text style={styles.upcoming}>Upcoming</Text>
+          <Ionicons
+            style={{ marginTop: 25, paddingLeft: 25 }}
+            name="ios-arrow-back"
+            color="white"
+            size={35}
+          />
+        </TouchableOpacity>
+        <Text style={styles.help}>Need Help?</Text>
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
-          <Image
-            style={{ marginTop: -100, width: 350, height: 350 }}
-            source={require("../assets/Icons_Images/tab_upcoming/No_Booking_Illustration.png")}
-          />
-          <Text style={{ color: "#FFFFFF", fontSize: 15 }}>
-            No Upcoming Bookings
-          </Text>
+          <Text style={styles.contactText}>Contact us</Text>
+          <Text style={styles.email}>support@sleeping8.com</Text>
+        </View>
+
+        <View style={{ alignItems: "center", justifyContent: "flex-end" }}>
+          <Text style={styles.vText}>Version 1.0.0</Text>
         </View>
       </View>
     );
@@ -40,9 +40,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#242625",
   },
-  upcoming: {
+  help: {
     marginLeft: 20,
-    marginTop: 10,
     color: "#FDB900",
     fontSize: 34,
     fontFamily: "black",

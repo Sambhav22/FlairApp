@@ -198,7 +198,12 @@ export default class Account extends React.Component {
               source={require("../assets/Icons_Images/tab_account/Support-64.png")}
             />
 
-            <TouchableOpacity style={{ marginTop: 10, flexDirection: "row" }}>
+            <TouchableOpacity
+              style={{ marginTop: 10, flexDirection: "row" }}
+              onPress={() => {
+                this.props.navigation.navigate("Support");
+              }}
+            >
               <View style={{ width: 200 }}>
                 <Text style={styles.accountText}>Support</Text>
               </View>
