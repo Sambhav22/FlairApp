@@ -14,17 +14,19 @@ export default class BaseLocation extends React.Component {
       eventId: props.route.params.eventId,
       token: props.route.params.token,
       eventPrice: props.route.params.token,
+      info: props.route.params.info,
     };
   }
   myFun = () => {
     const { userId, price, eventId, token } = this.state;
-    var info = this.props.route.params.info;
+    var info = this.state.info;
+
     for (var i = 0; i < info.length; i++) {
-      if (info[i].id == eventId) {
+      if (info[i].eventTypeId == eventId) {
         info[i].price = price;
-        console.log(info[i].price);
       }
     }
+    console.log(JSON.stringify(info));
 
     fetch("http://api-staging.sleeping8.com/bookingdetail/update", {
       method: "PUT",
@@ -42,11 +44,11 @@ export default class BaseLocation extends React.Component {
         if (res.type == "success") {
           const UpdateState = this.props.route.params.UpdateState;
 
-          //          var eventPrice = res.data.eventPrice;
-          //         this.props.navigation.navigate("BasePrice", {
-          //         eventPrice: eventPrice,
-          //        });
-          //      UpdateState();
+          var eventPrice = res.data.eventPrice;
+          this.props.navigation.navigate("BasePrice", {
+            eventPrice: eventPrice,
+          });
+          UpdateState();
         } else {
           alert(res.message);
         }

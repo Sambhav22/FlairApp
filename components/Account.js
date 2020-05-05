@@ -70,6 +70,7 @@ export default class Account extends React.Component {
   }
 
   render() {
+    //  console.log(this.state.eventPrice);
     return (
       <View style={styles.container}>
         <Text style={styles.account}>Account</Text>

@@ -20,16 +20,14 @@ export default class BaseLocation extends React.Component {
   }
 
   render() {
-    console.log(this.state.eventPrice);
     var info = [];
     for (var i = 0; i < this.state.eventPrice.length; i++) {
-      info = [
-        {
-          id: this.state.eventPrice[i].eventTypeId._id,
-          price: this.state.eventPrice[i].price,
-        },
-      ];
+      info.push({
+        eventTypeId: this.state.eventPrice[i].eventTypeId._id,
+        price: this.state.eventPrice[i].price,
+      });
     }
+    console.log(JSON.stringify(info));
 
     return (
       <View style={styles.container}>
