@@ -21,7 +21,7 @@ export default class BaseLocation extends React.Component {
     const { userId, token } = this.state;
     const fulladress = name + "," + address;
 
-    fetch("http://api-staging.sleeping8.com/bookingdetail/update", {
+    fetch("http://13.233.164.8:3000/bookingdetail/update", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -76,7 +76,7 @@ export default class ResetPassword extends React.Component {
     if (empty == false) {
       this.setState({ indicator: true });
 
-      fetch("http://api-staging.sleeping8.com/auth/resetpassword", {
+      fetch("http://13.233.164.8:3000/auth/resetpassword", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

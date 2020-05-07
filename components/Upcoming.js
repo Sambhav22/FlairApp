@@ -4,8 +4,37 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, Text, View, TextInput, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Assets } from "@react-navigation/stack";
+import Routes from "./Routes";
 
 export default class Support extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: props.route.params.token,
+      stageName: "",
+    };
+  }
+  componentDidMount() {
+    fetch("http://13.233.164.8:3000/professionaldetail/get_info/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: this.state.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.type == "success") {
+          this.setState({
+            stageName: res.data.stageName,
+          });
+        } else {
+          alert("Something went wrong");
+        }
+      })
+      .done();
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -17,7 +46,7 @@ export default class Support extends React.Component {
             color: "#FFFFFF",
           }}
         >
-          Hello Bass Mafia
+          Hello {this.state.stageName}
         </Text>
         <Text style={styles.upcoming}>Upcoming</Text>
         <View

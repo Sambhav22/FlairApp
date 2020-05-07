@@ -22,7 +22,7 @@ export default class Splash extends React.Component {
 
       if (result != null) {
         var token = result;
-        fetch("http://api-staging.sleeping8.com/user/me", {
+        fetch("http://13.233.164.8:3000/user/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -37,16 +37,13 @@ export default class Splash extends React.Component {
               var mobile = res.data.mobile;
               var image = res.data.profilePic.imagePaths.path;
 
-              fetch(
-                "http://api-staging.sleeping8.com/bookingdetail/get_info/me",
-                {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json",
-                    authorization: token,
-                  },
-                }
-              )
+              fetch("http://13.233.164.8:3000/bookingdetail/get_info/me", {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  authorization: token,
+                },
+              })
                 .then((response) => response.json())
                 .then((res) => {
                   if (res.type == "success") {
@@ -77,6 +74,12 @@ export default class Splash extends React.Component {
                           email,
                           cabDetails,
                         },
+                      },
+                    });
+                    this.props.navigation.navigate("AccountStackScreen", {
+                      screen: "Account",
+                      params: {
+                        screen: "Upcoming",
                       },
                     });
                   }

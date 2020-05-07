@@ -16,8 +16,10 @@ export default class BaseLocation extends React.Component {
   }
 
   componentDidMount() {
-    var x = this.state.text.length;
-    this.setState({ textLength: x });
+    if (this.state.text) {
+      var x = this.state.text.length;
+      this.setState({ textLength: x });
+    }
   }
   onChangeText(text) {
     this.setState({
@@ -26,7 +28,7 @@ export default class BaseLocation extends React.Component {
     });
   }
   myFun = () => {
-    fetch("http://api-staging.sleeping8.com/professionaldetail/update", {
+    fetch("http://13.233.164.8:3000/professionaldetail/update", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

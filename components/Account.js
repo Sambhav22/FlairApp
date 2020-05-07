@@ -38,7 +38,7 @@ export default class Account extends React.Component {
   }
 
   UpdateStateCity() {
-    fetch("http://api-staging.sleeping8.com/bookingdetail/get_info/me", {
+    fetch("http://13.233.164.8:3000/bookingdetail/get_info/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -52,8 +52,8 @@ export default class Account extends React.Component {
         }
       });
   }
-  UpdateStateAccount() {
-    fetch("http://api-staging.sleeping8.com/bookingdetail/get_info/me", {
+  async UpdateStateAccount() {
+    await fetch("http://13.233.164.8:3000/bookingdetail/get_info/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

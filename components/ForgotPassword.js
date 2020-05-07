@@ -77,7 +77,7 @@ export default class ForgotPassword extends React.Component {
         channel1 = "email";
       }
       this.setState({ indicator: true });
-      fetch("http://api-staging.sleeping8.com/auth/sendotp", {
+      fetch("http://13.233.164.8:3000/auth/sendotp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

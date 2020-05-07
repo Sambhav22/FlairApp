@@ -2,23 +2,17 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, Text, View, TextInput } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 export default class Genre extends React.Component {
   constructor(props) {
     super(props);
-    this.maxLength = 100;
     this.state = {
-      textLength: 0,
       subCategoryIds: props.route.params.subCategoryIds,
     };
   }
-  onChangeText(text) {
-    this.setState({
-      textLength: text.length,
-    });
-  }
 
   render() {
+    console.log(this.state.subCategoryIds);
     return (
       <View style={styles.container}>
         <View style={{ flexDirection: "row" }}>
@@ -36,25 +30,20 @@ export default class Genre extends React.Component {
           </TouchableOpacity>
           <Text style={styles.price}>Genre(s)</Text>
         </View>
-        <Text style={styles.bollywood}>Bollywood</Text>
-        <View style={{ backgroundColor: "#FDB900", padding: 6, marginTop: 10 }}>
-          <Text style={styles.House}>{this.state.subCategoryIds[0].name}</Text>
-        </View>
-        <Text style={styles.Trance}>Trance</Text>
-        <Text style={styles.Dubstep}>Dubstep</Text>
-
-        <View style={{ backgroundColor: "#FDB900", padding: 6, marginTop: 13 }}>
-          <Text style={styles.House}>{this.state.subCategoryIds[1].name}</Text>
-        </View>
-        <Text style={styles.Trance}>Drum and Bass</Text>
-        <Text style={styles.Dubstep}>Trap</Text>
-        <Text style={styles.Dubstep}>Future Bass</Text>
-        <View style={{ backgroundColor: "#FDB900", padding: 6, marginTop: 13 }}>
-          <Text style={styles.House}>{this.state.subCategoryIds[2].name}</Text>
-        </View>
-        <Text style={styles.Trance}>Deep House</Text>
-        <Text style={styles.Dubstep}>Tech House</Text>
-        <Text style={styles.Dubstep}>Melodic Techno</Text>
+        <ScrollView>
+          {this.state.subCategoryIds.map((value) => (
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginBottom: 5,
+                borderBottomColor: "#707070",
+                borderBottomWidth: 1,
+              }}
+            >
+              <Text style={styles.bollywood}>{value.name}</Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     );
   }
@@ -73,7 +62,8 @@ const styles = StyleSheet.create({
   },
   bollywood: {
     marginTop: 18,
-    marginLeft: 25,
+    marginBottom: 10,
+    marginLeft: 6,
     fontSize: 16,
     color: "#FFFFFF",
     fontFamily: "regular",

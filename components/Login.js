@@ -57,7 +57,7 @@ export default class Login extends React.Component {
     }, 3000);
     if (empty == false) {
       this.setState({ indicator: true });
-      fetch("http://api-staging.sleeping8.com/auth/login", {
+      fetch("http://13.233.164.8:3000/auth/login", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -74,7 +74,7 @@ export default class Login extends React.Component {
             var token = res.token;
             AsyncStorage.setItem("token", token);
 
-            fetch("http://api-staging.sleeping8.com/user/me", {
+            fetch("http://13.233.164.8:3000/user/me", {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
@@ -89,16 +89,13 @@ export default class Login extends React.Component {
                   var mobile = res.data.mobile;
                   var image = res.data.profilePic.imagePaths.path;
 
-                  fetch(
-                    "http://api-staging.sleeping8.com/bookingdetail/get_info/me",
-                    {
-                      method: "GET",
-                      headers: {
-                        "Content-Type": "application/json",
-                        authorization: token,
-                      },
-                    }
-                  )
+                  fetch("http://13.233.164.8:3000/bookingdetail/get_info/me", {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                      authorization: token,
+                    },
+                  })
                     .then((response) => response.json())
                     .then((res) => {
                       if (res.type == "success") {
@@ -128,6 +125,15 @@ export default class Login extends React.Component {
                               mobile,
                               email,
                               cabDetails,
+                            },
+                          },
+                        });
+                        this.props.navigation.navigate("AccountStackScreen", {
+                          screen: "Account",
+                          params: {
+                            screen: "Upcoming",
+                            params: {
+                              token,
                             },
                           },
                         });

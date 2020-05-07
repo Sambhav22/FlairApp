@@ -14,25 +14,25 @@ export default class Calendar1 extends React.Component {
       <View style={styles.container}>
         <Text style={styles.price}>Calendar</Text>
         <Calendar
-          style={{ marginBottom: 100000, marginLeft: -30 }}
+          style={{ marginBottom: 100000 }}
           theme={{
             backgroundColor: "#ffffff",
             calendarBackground: "#242625",
             textSectionTitleColor: "#ffffff",
-            selectedDayBackgroundColor: "#ffffff",
+            selectedDayBackgroundColor: "#242625",
             selectedDayTextColor: "#ffffff",
             todayTextColor: "#ffffff",
             dayTextColor: "#2d4150",
             textDisabledColor: "#ffffff",
-            dotColor: "#ffffff",
+            dotColor: "#242625",
             selectedDotColor: "#ffffff",
             arrowColor: "#ffffff",
             disabledArrowColor: "#ffffff",
             monthTextColor: "#ffffff",
             indicatorColor: "#ffffff",
-            textDayFontFamily: "monospace",
-            textMonthFontFamily: "monospace",
-            textDayHeaderFontFamily: "monospace",
+            textDayFontFamily: "regular",
+            textMonthFontFamily: "regular",
+            textDayHeaderFontFamily: "regular",
             textDayFontWeight: "300",
             textMonthFontWeight: "bold",
             textDayHeaderFontWeight: "300",
@@ -54,7 +54,7 @@ export default class Calendar1 extends React.Component {
             console.log("selected day", day);
           }}
           // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-          monthFormat={"yyyy MM"}
+          monthFormat={"MMM yyyy"}
           // Handler which gets executed when visible month changes in calendar. Default = undefined
           onMonthChange={(month) => {
             console.log("month changed", month);
@@ -67,21 +67,21 @@ export default class Calendar1 extends React.Component {
           hideExtraDays={true}
           // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
           // day from another month that is visible in calendar page. Default = false
-          disableMonthChange={true}
+          disableMonthChange={false}
           // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
           firstDay={1}
           // Hide day names. Default = false
-          hideDayNames={true}
+          hideDayNames={false}
           // Show week numbers to the left. Default = false
-          showWeekNumbers={true}
+          showWeekNumbers={false}
           // Handler which gets executed when press arrow icon left. It receive a callback can go back month
           onPressArrowLeft={(substractMonth) => substractMonth()}
           // Handler which gets executed when press arrow icon right. It receive a callback can go next month
           onPressArrowRight={(addMonth) => addMonth()}
           // Disable left arrow. Default = false
-          disableArrowLeft={true}
+          disableArrowLeft={false}
           // Disable right arrow. Default = false
-          disableArrowRight={true}
+          disableArrowRight={false}
         />
       </View>
     );

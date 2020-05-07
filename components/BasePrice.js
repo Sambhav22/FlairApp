@@ -37,8 +37,14 @@ export default class BaseLocation extends React.Component {
               const UpdateStateAccount = this.props.route.params
                 .UpdateStateAccount;
               UpdateStateAccount();
-              this.props.navigation.navigate("Account", {
-                eventPrice: this.state.eventPrice,
+              this.props.navigation.navigate("AccountStackScreen", {
+                screen: "Account",
+                params: {
+                  screen: "Account",
+                  params: {
+                    eventPrice: this.state.eventPrice,
+                  },
+                },
               });
             }}
           >
