@@ -60,15 +60,16 @@ export default class BaseLocation extends React.Component {
         {this.state.eventPrice.map((value, index) => (
           <View key={value._id}>
             <Text style={styles.addressText}>{value.eventTypeId.name}</Text>
-            <View style={{ flexDirection: "row" }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
               <Text
                 style={{
-                  width: 350,
+                  width: "80%",
                   fontSize: 16,
                   color: "#FFFF",
                   fontFamily: "Semibold",
-                  paddingLeft: 21,
-                  paddingRight: 15,
+                  marginLeft: "5%",
                   marginTop: 9,
                 }}
               >
@@ -114,14 +115,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#555555",
     paddingTop: 25,
-    marginLeft: 20,
+    marginLeft: "5%",
     fontFamily: "regular",
   },
   editText: {
+    marginRight: "3%",
     fontSize: 18,
     color: "#FDB900",
     fontFamily: "bold",
-    paddingRight: 4,
     paddingTop: 6,
   },
 });

@@ -35,7 +35,7 @@ export default class Artist extends React.Component {
         if (res.type == "success") {
           this.setState({
             stageName: res.data.stageName,
-            category: res.data.categoryId.name,
+            category: res.data.categoryId,
             artistInfo: res.data.artistInfo,
             subCategoryIds: res.data.subCategoryIds,
           });
@@ -47,7 +47,7 @@ export default class Artist extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://13.233.164.8:3000/professionaldetail/get_info/me", {
+    fetch("http://api-staging.sleeping8.com/professionaldetail/get_info/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export default class Artist extends React.Component {
         if (res.type == "success") {
           this.setState({
             stageName: res.data.stageName,
-            category: res.data.categoryId.name,
+            category: res.data.categoryId,
             artistInfo: res.data.artistInfo,
             subCategoryIds: res.data.subCategoryIds,
           });
@@ -138,13 +138,16 @@ export default class Artist extends React.Component {
         <Text style={styles.stageText}>STAGE NAME</Text>
         <Text style={styles.stageValue}>{this.state.stageName}</Text>
         <Text style={styles.stageText}>CATEGORY</Text>
-        <Text style={styles.stageValue}>{this.state.category}</Text>
+        <Text style={styles.stageValue}>{this.state.category.name}</Text>
         <Text style={styles.stageText}>GENRE(S)</Text>
         <TouchableOpacity
           style={{ flexDirection: "row" }}
           onPress={() =>
             this.props.navigation.navigate("Genre", {
               subCategoryIds: this.state.subCategoryIds,
+              category: this.state.category,
+              token: this.state.token,
+              userId: this.state.userId,
             })
           }
         >

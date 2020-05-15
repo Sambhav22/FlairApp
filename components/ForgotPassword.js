@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  BackHandler,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
@@ -20,7 +21,17 @@ export default class ForgotPassword extends React.Component {
       email: "",
       indicator: false,
     };
+    this.props.navigation.addListener("didFocus", (payload) => {
+      this.setState({ is_updated: true });
+    });
   }
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", function () {
+      return true;
+    });
+  }
+
   myfun = () => {
     Keyboard.dismiss();
 

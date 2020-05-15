@@ -10,6 +10,7 @@ import {
   Button,
   AsyncStorage,
   ActivityIndicator,
+  BackHandler,
 } from "react-native";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
@@ -25,6 +26,16 @@ export default class Login extends React.Component {
       indicator: false,
       secureTextEntry: true,
     };
+
+    this.props.navigation.addListener("didFocus", (payload) => {
+      this.setState({ is_updated: true });
+    });
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", function () {
+      BackHandler.exitApp();
+    });
   }
 
   onIconPress = () => {

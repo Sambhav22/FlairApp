@@ -8,6 +8,7 @@ import {
   Keyboard,
   TouchableOpacity,
   ActivityIndicator,
+  BackHandler,
 } from "react-native";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
@@ -28,6 +29,15 @@ export default class ResetPassword extends React.Component {
       Error: "",
       show: false,
     };
+    this.props.navigation.addListener("didFocus", (payload) => {
+      this.setState({ is_updated: true });
+    });
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", function () {
+      return true;
+    });
   }
   function() {
     $("#myInput").on("input", function () {

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Flair",
-    "slug": "appVer15",
+    "slug": "FlairVer1",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
@@ -14,11 +14,13 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 5000
     },
+
     "assetBundlePatterns": ["assets/*"],
-    "ios": {
-      "supportsTablet": true
+    "android": {
+      "package": "com.sleeping8.flair",
+      "versionCode": 1
     },
     "description": ""
   }
