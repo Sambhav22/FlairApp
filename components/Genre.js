@@ -38,7 +38,6 @@ export default class Genre extends React.Component {
       .then((response) => response.json())
       .then((res) => {
         if (res.type == "success") {
-          alert(res.message);
         } else {
           alert("Something went wrong");
         }
