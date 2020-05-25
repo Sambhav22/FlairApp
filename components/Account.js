@@ -6,6 +6,7 @@ import {
   Image,
   AsyncStorage,
   BackHandler,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -13,27 +14,79 @@ export default class Account extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: props.route.params.user,
-      image: props.route.params.image,
-      city: props.route.params.city,
-      address: props.route.params.address,
-      lng: props.route.params.lng,
-      lat: props.route.params.lat,
-      eventPrice: props.route.params.eventPrice,
-      userId: props.route.params.userId,
-      token: props.route.params.token,
-      email: props.route.params.email,
-      mobile: props.route.params.mobile,
-      cabDetails: props.route.params.cabDetails,
+      user: "",
+      image: "",
+      city: "",
+      address: "",
+      lng: "",
+      lat: "",
+      eventPrice: [],
+      userId: "",
+      token: "",
+      email: "",
+      mobile: "",
+      cabDetails: [],
+      indicator: false,
     };
-    this.props.navigation.addListener("didFocus", (payload) => {
-      this.setState({ is_updated: true });
-    });
   }
 
   componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", function () {
-      return true;
+    this.setState({ indicator: true });
+
+    AsyncStorage.getItem("token", (err, result) => {
+      if (result != null) {
+        var token = result;
+        fetch("http://13.233.164.8:3000/user/me", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: token,
+          },
+        })
+          .then((response) => response.json())
+          .then((res) => {
+            if (res.type == "success") {
+              var fullname = res.data.fullName;
+              var email = res.data.email;
+              var mobile = res.data.mobile;
+              var image = res.data.profilePic.imagePaths.path;
+
+              fetch("http://13.233.164.8:3000/bookingdetail/get_info/me", {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  authorization: token,
+                },
+              })
+                .then((response) => response.json())
+                .then((res) => {
+                  if (res.type == "success") {
+                    var userId = res.data.userId;
+                    var city = res.data.city;
+                    var address = res.data.address;
+                    var lng = res.data.coordinates.lng;
+                    var lat = res.data.coordinates.lat;
+                    var eventPrice = res.data.eventPrice;
+                    var cabDetails = res.data.cabsPreferences;
+                    this.setState({ user: fullname });
+                    this.setState({ image: image });
+                    this.setState({ city: city });
+                    this.setState({ address: address });
+                    this.setState({ lng: lng });
+                    this.setState({ lat: lat });
+                    this.setState({ eventPrice });
+                    this.setState({ userId });
+                    this.setState({ token });
+
+                    this.setState({ mobile });
+                    this.setState({ email });
+                    this.setState({ cabDetails });
+                    this.setState({ indicator: false });
+                  }
+                });
+            }
+          });
+      }
     });
   }
 
@@ -73,161 +126,171 @@ export default class Account extends React.Component {
     //  console.log(this.state.eventPrice);
     return (
       <View style={styles.container}>
-        <Text style={styles.account}>Account</Text>
-        <View style={styles.imgContainer}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: this.state.image,
-            }}
-            placeholderSource={require("../assets/Placeholder-256.png")}
-          />
-          <Text style={styles.nameText}>{this.state.user}</Text>
-        </View>
-        <View style={styles.notContainer}>
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              style={{ marginTop: 5, height: 32, width: 32 }}
-              source={require("../assets/Icons_Images/tab_account/Notification-64.png")}
-            />
-
-            <TouchableOpacity style={{ flexDirection: "row" }}>
-              <View style={{ width: 200 }}>
-                <Text style={styles.notText}>Notifications</Text>
-              </View>
-              <Ionicons
-                style={styles.arrow}
-                name="ios-arrow-forward"
-                color="#FFFF"
-                size={15}
+        {this.state.indicator ? (
+          <ActivityIndicator style={{ flex: 1 }} size="large" color="white" />
+        ) : (
+          <View style={{ flex: 1 }}>
+            <Text style={styles.account}>Account</Text>
+            <View style={styles.imgContainer}>
+              <Image
+                style={styles.image}
+                source={{
+                  uri: this.state.image,
+                }}
+                placeholderSource={require("../assets/Placeholder-256.png")}
               />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              style={{ marginTop: 10, height: 32, width: 32 }}
-              source={require("../assets/Icons_Images/tab_account/Location-64.png")}
-            />
+              <Text style={styles.nameText}>{this.state.user}</Text>
+            </View>
+            <View style={styles.notContainer}>
+              <View style={{ flexDirection: "row" }}>
+                <Image
+                  style={{ marginTop: 5, height: 32, width: 32 }}
+                  source={require("../assets/Icons_Images/tab_account/Notification-64.png")}
+                />
 
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("BaseLocation", {
-                  city: this.state.city,
-                  address: this.state.address,
-                  lat: this.state.lat,
-                  lng: this.state.lng,
-                  userId: this.state.userId,
-                  token: this.state.token,
-                  UpdateStateCity: this.UpdateStateCity.bind(this),
-                });
+                <TouchableOpacity style={{ flexDirection: "row" }}>
+                  <View style={{ width: 200 }}>
+                    <Text style={styles.notText}>Notifications</Text>
+                  </View>
+                  <Ionicons
+                    style={styles.arrow}
+                    name="ios-arrow-forward"
+                    color="#FFFF"
+                    size={15}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Image
+                  style={{ marginTop: 10, height: 32, width: 32 }}
+                  source={require("../assets/Icons_Images/tab_account/Location-64.png")}
+                />
+
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate("BaseLocation", {
+                      city: this.state.city,
+                      address: this.state.address,
+                      lat: this.state.lat,
+                      lng: this.state.lng,
+                      userId: this.state.userId,
+                      token: this.state.token,
+                      UpdateStateCity: this.UpdateStateCity.bind(this),
+                    });
+                  }}
+                  style={{ marginTop: 8, flexDirection: "row" }}
+                >
+                  <View style={{ width: 200 }}>
+                    <Text style={styles.notText}>Base Location</Text>
+                  </View>
+                  <Ionicons
+                    style={styles.arrow1}
+                    name="ios-arrow-forward"
+                    color="#FFFF"
+                    size={15}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Image
+                  style={{ marginTop: 10, height: 32, width: 32 }}
+                  source={require("../assets/Icons_Images/tab_account/Price-64.png")}
+                />
+
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate("BasePrice", {
+                      eventPrice: this.state.eventPrice,
+                      userId: this.state.userId,
+                      token: this.state.token,
+                      UpdateStateAccount: this.UpdateStateAccount.bind(this),
+                    });
+                  }}
+                  style={{ marginTop: 10, flexDirection: "row" }}
+                >
+                  <View style={{ width: 200 }}>
+                    <Text style={styles.baseText}>Base Price</Text>
+                  </View>
+                  <Ionicons
+                    style={styles.arrow2}
+                    name="ios-arrow-forward"
+                    color="#FFFF"
+                    size={15}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Image
+                  style={{ marginTop: 10, height: 32, width: 32 }}
+                  source={require("../assets/Icons_Images/tab_account/Account-64.png")}
+                />
+
+                <TouchableOpacity
+                  style={{ marginTop: 10, flexDirection: "row" }}
+                  onPress={() => {
+                    this.props.navigation.navigate("ArtistProfile", {
+                      user: this.state.user,
+                      mobile: this.state.mobile,
+                      email: this.state.email,
+                      token: this.state.token,
+                      userId: this.state.userId,
+                      cabDetails: this.state.cabDetails,
+                    });
+                  }}
+                >
+                  <View style={{ width: 200 }}>
+                    <Text style={styles.accountText}>Account</Text>
+                  </View>
+                  <Ionicons
+                    style={styles.arrow3}
+                    name="ios-arrow-forward"
+                    color="#FFFF"
+                    size={15}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Image
+                  style={{ marginTop: 10, height: 32, width: 32 }}
+                  source={require("../assets/Icons_Images/tab_account/Support-64.png")}
+                />
+
+                <TouchableOpacity
+                  style={{ marginTop: 10, flexDirection: "row" }}
+                  onPress={() => {
+                    this.props.navigation.navigate("Support");
+                  }}
+                >
+                  <View style={{ width: 200 }}>
+                    <Text style={styles.accountText}>Support</Text>
+                  </View>
+                  <Ionicons
+                    style={styles.arrow3}
+                    name="ios-arrow-forward"
+                    color="#FFFF"
+                    size={15}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "flex-end",
               }}
-              style={{ marginTop: 8, flexDirection: "row" }}
             >
-              <View style={{ width: 200 }}>
-                <Text style={styles.notText}>Base Location</Text>
-              </View>
-              <Ionicons
-                style={styles.arrow1}
-                name="ios-arrow-forward"
-                color="#FFFF"
-                size={15}
-              />
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  AsyncStorage.clear();
+                  this.props.navigation.replace("Login");
+                }}
+              >
+                <Text style={styles.logoutText}>Logout</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              style={{ marginTop: 10, height: 32, width: 32 }}
-              source={require("../assets/Icons_Images/tab_account/Price-64.png")}
-            />
-
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("BasePrice", {
-                  eventPrice: this.state.eventPrice,
-                  userId: this.state.userId,
-                  token: this.state.token,
-                  UpdateStateAccount: this.UpdateStateAccount.bind(this),
-                });
-              }}
-              style={{ marginTop: 10, flexDirection: "row" }}
-            >
-              <View style={{ width: 200 }}>
-                <Text style={styles.baseText}>Base Price</Text>
-              </View>
-              <Ionicons
-                style={styles.arrow2}
-                name="ios-arrow-forward"
-                color="#FFFF"
-                size={15}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              style={{ marginTop: 10, height: 32, width: 32 }}
-              source={require("../assets/Icons_Images/tab_account/Account-64.png")}
-            />
-
-            <TouchableOpacity
-              style={{ marginTop: 10, flexDirection: "row" }}
-              onPress={() => {
-                this.props.navigation.navigate("ArtistProfile", {
-                  user: this.state.user,
-                  mobile: this.state.mobile,
-                  email: this.state.email,
-                  token: this.state.token,
-                  userId: this.state.userId,
-                  cabDetails: this.state.cabDetails,
-                });
-              }}
-            >
-              <View style={{ width: 200 }}>
-                <Text style={styles.accountText}>Account</Text>
-              </View>
-              <Ionicons
-                style={styles.arrow3}
-                name="ios-arrow-forward"
-                color="#FFFF"
-                size={15}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              style={{ marginTop: 10, height: 32, width: 32 }}
-              source={require("../assets/Icons_Images/tab_account/Support-64.png")}
-            />
-
-            <TouchableOpacity
-              style={{ marginTop: 10, flexDirection: "row" }}
-              onPress={() => {
-                this.props.navigation.navigate("Support");
-              }}
-            >
-              <View style={{ width: 200 }}>
-                <Text style={styles.accountText}>Support</Text>
-              </View>
-              <Ionicons
-                style={styles.arrow3}
-                name="ios-arrow-forward"
-                color="#FFFF"
-                size={15}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              AsyncStorage.clear();
-              this.props.navigation.navigate("Login");
-            }}
-          >
-            <Text style={styles.logoutText}>Logout</Text>
-          </TouchableOpacity>
-        </View>
+        )}
       </View>
     );
   }

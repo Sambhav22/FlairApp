@@ -21,15 +21,6 @@ export default class ForgotPassword extends React.Component {
       email: "",
       indicator: false,
     };
-    this.props.navigation.addListener("didFocus", (payload) => {
-      this.setState({ is_updated: true });
-    });
-  }
-
-  componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", function () {
-      return true;
-    });
   }
 
   myfun = () => {

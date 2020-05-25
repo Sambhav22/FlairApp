@@ -7,6 +7,7 @@ import {
   View,
   TextInput,
   ActivityIndicator,
+  Modal,
 } from "react-native";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 let sub = [];
@@ -21,9 +22,11 @@ export default class Genre extends React.Component {
       show: true,
       token: props.route.params.token,
       userId: props.route.params.userId,
+      indicator: false,
     };
   }
-  componentWillUnmount() {
+  updateTheGenre = () => {
+    this.setState({ indicator: true });
     fetch("http://api-staging.sleeping8.com/professionaldetail/update", {
       method: "PUT",
       headers: {
@@ -37,13 +40,15 @@ export default class Genre extends React.Component {
     })
       .then((response) => response.json())
       .then((res) => {
+        this.setState({ indicator: false });
+
         if (res.type == "success") {
         } else {
           alert("Something went wrong");
         }
       })
       .done();
-  }
+  };
   componentDidMount() {
     if (check === true) {
       this.state.subCategoryIds.map((values) => {
@@ -79,21 +84,38 @@ export default class Genre extends React.Component {
 
     if (a != -1) {
       sub.splice(a, 1);
-
-      this.forceUpdate();
+      this.updateTheGenre();
     }
   };
 
   addElement = (addId) => {
     sub.push(addId);
-
-    this.forceUpdate();
+    this.updateTheGenre();
   };
 
   render() {
-    console.log("value of array" + sub);
     return (
       <View style={styles.container}>
+        {this.state.indicator ? (
+          <Modal
+            transparent={true}
+            animationType={"none"}
+            visible={this.state.indicator}
+            onRequestClose={() => {
+              console.log("close modal");
+            }}
+          >
+            <View style={styles.modalBackground}>
+              <View style={styles.activityIndicatorWrapper}>
+                <ActivityIndicator
+                  style={{ flex: 1 }}
+                  size="large"
+                  animating={this.state.indicator}
+                />
+              </View>
+            </View>
+          </Modal>
+        ) : null}
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             onPress={() => {
@@ -172,6 +194,22 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#FFFFFF",
     fontFamily: "bold",
+  },
+  modalBackground: {
+    flex: 1,
+    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    backgroundColor: "#00000040",
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: "#FFFFFF",
+    height: 100,
+    width: 100,
+    borderRadius: 10,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-around",
   },
   bollywoods: {
     marginTop: 12,

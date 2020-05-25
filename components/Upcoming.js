@@ -1,7 +1,14 @@
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, Text, View, TextInput, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Image,
+  AsyncStorage,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Assets } from "@react-navigation/stack";
 import Routes from "./Routes";
@@ -10,29 +17,36 @@ export default class Support extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: props.route.params.token,
+      token: "",
       stageName: "",
     };
   }
+
   componentDidMount() {
-    fetch("http://13.233.164.8:3000/professionaldetail/get_info/me", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: this.state.token,
-      },
-    })
-      .then((response) => response.json())
-      .then((res) => {
-        if (res.type == "success") {
-          this.setState({
-            stageName: res.data.stageName,
-          });
-        } else {
-          alert("Something went wrong");
-        }
-      })
-      .done();
+    AsyncStorage.getItem("token", (err, result) => {
+      if (result != null) {
+        this.setState({ token: result });
+
+        fetch("http://13.233.164.8:3000/professionaldetail/get_info/me", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: this.state.token,
+          },
+        })
+          .then((response) => response.json())
+          .then((res) => {
+            if (res.type == "success") {
+              this.setState({
+                stageName: res.data.stageName,
+              });
+            } else {
+              alert("Something went wrong");
+            }
+          })
+          .done();
+      }
+    });
   }
 
   render() {

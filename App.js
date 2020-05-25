@@ -1,8 +1,11 @@
 import React from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
+import { enableScreens } from "react-native-screens";
+
 import Routes from "./components/Routes";
 
+enableScreens();
 class App extends React.Component {
   constructor() {
     super();

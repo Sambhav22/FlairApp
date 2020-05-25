@@ -7,7 +7,7 @@ export default class BaseLocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      price: props.route.params.price,
+      price: props.route.params.price != 0 ? props.route.params.price : " ",
       name: props.route.params.name,
       description: props.route.params.description,
       userId: props.route.params.userId,
@@ -15,6 +15,7 @@ export default class BaseLocation extends React.Component {
       token: props.route.params.token,
       eventPrice: props.route.params.token,
       info: props.route.params.info,
+      index: props.route.params.index,
     };
   }
   myFun = () => {
@@ -48,7 +49,7 @@ export default class BaseLocation extends React.Component {
           this.props.navigation.navigate("BasePrice", {
             eventPrice: eventPrice,
           });
-          UpdateState();
+          UpdateState(this.state.index);
         } else {
           alert(res.message);
         }
@@ -57,11 +58,14 @@ export default class BaseLocation extends React.Component {
   };
 
   render() {
+    const checkPrice = this.props.route.params.checkPrice;
+
     return (
       <View style={styles.container}>
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             onPress={() => {
+              checkPrice(this.state.index);
               this.props.navigation.navigate("BasePrice");
             }}
           >

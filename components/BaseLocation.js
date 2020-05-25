@@ -47,6 +47,11 @@ export default class BaseLocation extends React.Component {
     // location object
   }
 
+  componentWillUnmount() {
+    const UpdateStateCity = this.props.route.params.UpdateStateCity;
+    UpdateStateCity();
+  }
+
   componentDidMount() {
     if (this.state.city == "") {
       this.getData();

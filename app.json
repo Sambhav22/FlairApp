@@ -1,17 +1,21 @@
 {
   "expo": {
     "name": "Flair",
-    "slug": "FlairVer1",
+    "slug": "FlairVer2",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/flair.png",
+    "backgroundColor": "#ffffff",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#242625"
+    },
+    "androidNavigationBar": {
+      "backgroundColor": "#0B0D0C"
     },
     "updates": {
       "fallbackToCacheTimeout": 5000

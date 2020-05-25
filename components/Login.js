@@ -26,16 +26,6 @@ export default class Login extends React.Component {
       indicator: false,
       secureTextEntry: true,
     };
-
-    this.props.navigation.addListener("didFocus", (payload) => {
-      this.setState({ is_updated: true });
-    });
-  }
-
-  componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", function () {
-      BackHandler.exitApp();
-    });
   }
 
   onIconPress = () => {
@@ -82,6 +72,16 @@ export default class Login extends React.Component {
         .then((response) => response.json())
         .then((res) => {
           if (res.type == "success") {
+            //   if (
+            //   res.userData.userTypeId._id == "5e6dbab1a3ee32080873c9b2" ||
+            //  res.userData.userTypeId._id == "5e5d44830fa76f54a43ad4c3"
+            //) {
+            //  alert("Not registered as an artist or agency");
+            //   this.setState({ indicator: false });
+
+            //     return;
+            //    }
+
             var token = res.token;
             AsyncStorage.setItem("token", token);
 
@@ -119,33 +119,10 @@ export default class Login extends React.Component {
                         var cabDetails = res.data.cabsPreferences;
                         this.setState({ indicator: false });
 
-                        this.props.navigation.navigate("AccountStackScreen", {
-                          screen: "Account",
-                          params: {
-                            screen: "Account",
-                            params: {
-                              user: fullname,
-                              image: image,
-                              city,
-                              address,
-                              lng,
-                              lat,
-                              eventPrice,
-                              userId,
-                              token,
-                              mobile,
-                              email,
-                              cabDetails,
-                            },
-                          },
-                        });
-                        this.props.navigation.navigate("AccountStackScreen", {
+                        this.props.navigation.replace("AccountStackScreen", {
                           screen: "Account",
                           params: {
                             screen: "Upcoming",
-                            params: {
-                              token,
-                            },
                           },
                         });
                       }
@@ -222,6 +199,11 @@ export default class Login extends React.Component {
                 <TouchableOpacity
                   style={{ marginHorizontal: 110 }}
                   onPress={() => {
+                    BackHandler.removeEventListener(
+                      "hardwareBackPress",
+                      this.handleBackButton
+                    );
+
                     this.props.navigation.navigate("Forgot");
                   }}
                 >

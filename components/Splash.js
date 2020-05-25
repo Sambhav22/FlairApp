@@ -5,6 +5,7 @@ import {
   View,
   AsyncStorage,
   ActivityIndicator,
+  BackHandler,
 } from "react-native";
 
 export default class Splash extends React.Component {
@@ -14,10 +15,17 @@ export default class Splash extends React.Component {
       indicator: true,
     };
   }
+  handleBackButton = () => {
+    BackHandler.exitApp();
+    return true;
+  };
+
   componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
+
     AsyncStorage.getItem("token", (err, result) => {
       if (result == null) {
-        this.props.navigation.navigate("Login");
+        this.props.navigation.replace("Login");
       }
 
       if (result != null) {
@@ -56,27 +64,7 @@ export default class Splash extends React.Component {
                     var cabDetails = res.data.cabsPreferences;
                     this.setState({ indicator: false });
 
-                    this.props.navigation.navigate("AccountStackScreen", {
-                      screen: "Account",
-                      params: {
-                        screen: "Account",
-                        params: {
-                          user: fullname,
-                          image: image,
-                          city,
-                          address,
-                          lng,
-                          lat,
-                          eventPrice,
-                          userId,
-                          token,
-                          mobile,
-                          email,
-                          cabDetails,
-                        },
-                      },
-                    });
-                    this.props.navigation.navigate("AccountStackScreen", {
+                    this.props.navigation.replace("AccountStackScreen", {
                       screen: "Account",
                       params: {
                         screen: "Upcoming",
