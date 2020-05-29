@@ -72,15 +72,15 @@ export default class Login extends React.Component {
         .then((response) => response.json())
         .then((res) => {
           if (res.type == "success") {
-            //   if (
-            //   res.userData.userTypeId._id == "5e6dbab1a3ee32080873c9b2" ||
-            //  res.userData.userTypeId._id == "5e5d44830fa76f54a43ad4c3"
-            //) {
+            //       if (
+            //       res.userData.userTypeId._id == "5e6dbab1a3ee32080873c9b2" ||
+            //     res.userData.userTypeId._id == "5e5d44830fa76f54a43ad4c3"
+            //  ) {
             //  alert("Not registered as an artist or agency");
-            //   this.setState({ indicator: false });
+            //this.setState({ indicator: false });
 
-            //     return;
-            //    }
+            // return;
+            //}
 
             var token = res.token;
             AsyncStorage.setItem("token", token);

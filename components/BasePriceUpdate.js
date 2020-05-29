@@ -18,6 +18,11 @@ export default class BaseLocation extends React.Component {
       index: props.route.params.index,
     };
   }
+  componentWillUnmount() {
+    const switchValue = this.props.route.params.switchValue;
+    switchValue(this.state.index);
+  }
+
   myFun = () => {
     const { userId, price, eventId, token } = this.state;
     var info = this.state.info;
@@ -58,14 +63,11 @@ export default class BaseLocation extends React.Component {
   };
 
   render() {
-    const checkPrice = this.props.route.params.checkPrice;
-
     return (
       <View style={styles.container}>
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity
             onPress={() => {
-              checkPrice(this.state.index);
               this.props.navigation.navigate("BasePrice");
             }}
           >

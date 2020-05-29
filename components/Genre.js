@@ -27,7 +27,7 @@ export default class Genre extends React.Component {
   }
   updateTheGenre = () => {
     this.setState({ indicator: true });
-    fetch("http://api-staging.sleeping8.com/professionaldetail/update", {
+    fetch("http://13.233.164.8:3000/professionaldetail/update", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -59,8 +59,7 @@ export default class Genre extends React.Component {
     }
     check = false;
     fetch(
-      "http://api-staging.sleeping8.com/subcategory/getall/" +
-        this.state.category._id,
+      "http://13.233.164.8:3000/subcategory/getall/" + this.state.category._id,
       {
         method: "GET",
         headers: {

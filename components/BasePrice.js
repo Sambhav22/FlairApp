@@ -34,16 +34,17 @@ export default class BaseLocation extends React.Component {
     UpdateStateAccount();
   }
 
-  checkPrice(index) {
-    this.state.eventPrice[index].price != 0
-      ? null
-      : this.setState({ ["category" + index]: false });
-  }
   UpdateState(index) {
     this.setState({ eventPrice: this.props.route.params.eventPrice });
     this.setState({ ["check" + index]: true });
 
     alert("Price updated successfully.");
+  }
+
+  switchValue(index) {
+    if (this.state.eventPrice[index].price == 0) {
+      this.setState({ ["category" + index]: false });
+    }
   }
 
   async changeValue(valueChange, index, value, info) {
@@ -58,10 +59,10 @@ export default class BaseLocation extends React.Component {
           eventId: value.eventTypeId._id,
           token: this.state.token,
           UpdateState: this.UpdateState.bind(this),
+          switchValue: this.switchValue.bind(this),
           eventPrice: value,
           info,
           index,
-          checkPrice: this.checkPrice.bind(this),
         })
       : ((info[index].price = 0),
         this.setState({ indicator: true }),
@@ -80,6 +81,7 @@ export default class BaseLocation extends React.Component {
           .then((res) => {
             if (res.type == "success") {
               this.setState({ ["check" + index]: false });
+              this.setState({ eventPrice: res.data.eventPrice });
             } else {
               alert(res.message);
             }
@@ -190,7 +192,9 @@ export default class BaseLocation extends React.Component {
                       token: this.state.token,
                       UpdateState: this.UpdateState.bind(this),
                       eventPrice: value,
+                      switchValue: this.switchValue.bind(this),
                       info,
+                      index,
                     });
                   }}
                 >

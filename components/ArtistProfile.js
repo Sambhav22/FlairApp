@@ -47,7 +47,7 @@ export default class Artist extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://api-staging.sleeping8.com/professionaldetail/get_info/me", {
+    fetch("http://13.233.164.8:3000/professionaldetail/get_info/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
