@@ -115,7 +115,17 @@ export default class Artist extends React.Component {
             source={require("../assets/Icons_Images/tab_account/artist_profile_1/Password.png")}
           />
 
-          <TouchableOpacity style={{ flexDirection: "row" }}>
+          <TouchableOpacity
+            style={{ flexDirection: "row" }}
+            onPress={() => {
+              var channel1 = "email";
+
+              this.props.navigation.navigate("Reset2", {
+                message: `OTP Sent Successfully. Please Check your ${channel1}`,
+                email: this.state.email,
+              });
+            }}
+          >
             <Text style={styles.emailValue}>********</Text>
             <Ionicons
               style={{ marginTop: 2, marginLeft: 247 }}

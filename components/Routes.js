@@ -22,6 +22,8 @@ import Biography from "./Biography";
 import Splash from "./Splash";
 import Genre from "./Genre";
 import Support from "./Support";
+import Reset2 from "./changePassword";
+import changePassword from "./changePassword";
 const LoginStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const AccountStack = createStackNavigator();
@@ -98,6 +100,8 @@ const AccountStackScreen = ({ navigation, routes }) => {
         name="EditBaseLocation"
         component={EditBaseLocation}
       />
+      <AccountStack.Screen name="Reset2" component={changePassword} />
+
       <AccountStack.Screen name="ArtistProfile" component={ArtistProfile} />
       <AccountStack.Screen name="Biography" component={Biography} />
       <AccountStack.Screen name="Genre" component={Genre} />

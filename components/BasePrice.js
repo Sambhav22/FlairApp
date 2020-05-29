@@ -158,7 +158,7 @@ export default class BaseLocation extends React.Component {
               <Switch
                 trackColor={{ false: "black", true: "#FDB900" }}
                 thumbColor={"#ffffff"}
-                style={{ marginTop: 25 }}
+                style={{ marginTop: 25, marginRight: "2%" }}
                 value={this.state["category" + index]}
                 onValueChange={(valueChange) =>
                   this.changeValue(valueChange, index, value, info)

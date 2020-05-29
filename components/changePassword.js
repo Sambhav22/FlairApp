@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
-export default class ResetPassword extends React.Component {
+export default class changePassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -95,7 +95,7 @@ export default class ResetPassword extends React.Component {
 
           if (res.type == "success") {
             alert("New Updated Successfully.");
-            this.props.navigation.navigate("Login");
+            this.props.navigation.pop();
           } else {
             this.setState({
               Error: "Incorrect OTP",
@@ -160,7 +160,7 @@ export default class ResetPassword extends React.Component {
                 name="close"
                 size={25}
                 onPress={() => {
-                  this.props.navigation.navigate("Login");
+                  this.props.navigation.pop();
                 }}
               />
 

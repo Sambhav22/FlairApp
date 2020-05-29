@@ -85,50 +85,14 @@ export default class Login extends React.Component {
             var token = res.token;
             AsyncStorage.setItem("token", token);
 
-            fetch("http://13.233.164.8:3000/user/me", {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                authorization: token,
+            this.setState({ indicator: false });
+
+            this.props.navigation.replace("AccountStackScreen", {
+              screen: "Account",
+              params: {
+                screen: "Upcoming",
               },
-            })
-              .then((response) => response.json())
-              .then((res) => {
-                if (res.type == "success") {
-                  var fullname = res.data.fullName;
-                  var email = res.data.email;
-                  var mobile = res.data.mobile;
-                  var image = res.data.profilePic.imagePaths.path;
-
-                  fetch("http://13.233.164.8:3000/bookingdetail/get_info/me", {
-                    method: "GET",
-                    headers: {
-                      "Content-Type": "application/json",
-                      authorization: token,
-                    },
-                  })
-                    .then((response) => response.json())
-                    .then((res) => {
-                      if (res.type == "success") {
-                        var userId = res.data.userId;
-                        var city = res.data.city;
-                        var address = res.data.address;
-                        var lng = res.data.coordinates.lng;
-                        var lat = res.data.coordinates.lat;
-                        var eventPrice = res.data.eventPrice;
-                        var cabDetails = res.data.cabsPreferences;
-                        this.setState({ indicator: false });
-
-                        this.props.navigation.replace("AccountStackScreen", {
-                          screen: "Account",
-                          params: {
-                            screen: "Upcoming",
-                          },
-                        });
-                      }
-                    });
-                }
-              });
+            });
 
             this.setState({ email: "", pass: "" });
           } else {

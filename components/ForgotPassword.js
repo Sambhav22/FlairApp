@@ -103,6 +103,7 @@ export default class ForgotPassword extends React.Component {
             this.setState({
               ErrorEmail: "Entered Email Address is not registered",
             });
+            this.setState({ email: "" });
           }
         })
         .done();
